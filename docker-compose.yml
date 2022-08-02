@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  issue_tracker_frontend:
+  client:
     container_name: issue_tracker_frontend
     build:
       context: ./

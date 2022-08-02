@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  issue_tracker_frontend:
+    container_name: issue_tracker_frontend
+    build:
+      context: ./
+      args:
+        - EXPOSED_PORT=${FRONTEND_INTERNAL_HTTP_PORT}
+    volumes:
+      - .:/app
+    ports:
+      - "${FRONTEND_EXPOSED_HTTP_PORT}:${FRONTEND_INTERNAL_HTTP_PORT}"

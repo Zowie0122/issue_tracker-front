@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { FcAbout } from "react-icons/fc";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Button as="a" variant="success">
         Button as link
       </Button>
+      <FcAbout />
     </div>
   );
 }

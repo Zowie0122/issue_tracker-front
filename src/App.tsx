@@ -1,16 +1,14 @@
-import React from "react";
-import { Button } from "react-bootstrap";
-import { FcAbout } from "react-icons/fc";
+import { BrowserRouter } from "react-router-dom";
+import { routes } from "./routes";
+import Button from "@mui/material/Button";
 
 function App() {
+  const loggedIn = true;
   return (
-    <div>
-      Issue Tracker APP
-      <Button as="a" variant="success">
-        Button as link
-      </Button>
-      <FcAbout />
-    </div>
+    <>
+      <h1>Issue Tracker APP</h1>
+      <Button variant="contained">Hello World</Button>
+    </>
   );
 }
 

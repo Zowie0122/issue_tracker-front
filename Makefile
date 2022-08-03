@@ -29,4 +29,3 @@ react-root:
 
 ash-react: 
 	docker exec -it --user=app issue_tracker_frontend /bin/ash
-

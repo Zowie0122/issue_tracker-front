@@ -1,12 +1,13 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 
 function App() {
   return (
     <div>
       Issue Tracker APP
-      <button type="button" className="btn btn-primary">
-        Primary
-      </button>
+      <Button as="a" variant="success">
+        Button as link
+      </Button>
     </div>
   );
 }

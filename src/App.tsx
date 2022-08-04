@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Issues from "./pages/Issues";
 import Issue from "./pages/Issue";
 import UserProfile from "./pages/UserProfile";
-import AdminUser from "./pages/AdminUsers";
+import AdminUsers from "./pages/AdminUsers";
 import AdminDepartment from "./pages/AdminDepartments";
 import NotFound from "./pages/NotFound";
 
@@ -14,6 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* private routes */}
         <Route element={<UserRoutes />}>
           <Route path="/" element={<Home />} />
           <Route path="issues">
@@ -24,10 +25,11 @@ function App() {
           </Route>
           <Route path="/user/:id" element={<UserProfile />} />
           <Route element={<AdminRoutes />}>
-            <Route path="/admin/users" element={<AdminUser />} />
+            <Route path="/admin/users" element={<AdminUsers />} />
             <Route path="/admin/departments" element={<AdminDepartment />} />
           </Route>
         </Route>
+        {/* Unprotected routes */}
         <Route element={<Login />} path="/login" />
         <Route path="*" element={<NotFound />} />
       </Routes>

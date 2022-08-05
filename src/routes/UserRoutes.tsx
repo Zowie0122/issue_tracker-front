@@ -1,9 +1,18 @@
 import { Outlet, Navigate } from "react-router-dom";
+import { useGetSelfQuery } from "../services/usersApi";
 
 const UserRoutes = () => {
-  // TODO: add auth guard for guests and users(user + admin)
-  const authentificated = true;
-  return authentificated ? <Outlet /> : <Navigate to="/login" />;
+  const { data, isLoading, isSuccess } = useGetSelfQuery({});
+  console.log(data, isLoading, isSuccess);
+  let content;
+  if (isLoading) {
+    content = <p>Loading</p>;
+  } else if (isSuccess) {
+    content = <Outlet />;
+  } else {
+    content = <Navigate to="/login" />;
+  }
+  return content;
 };
 
 export default UserRoutes;

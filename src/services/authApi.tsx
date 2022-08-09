@@ -21,11 +21,15 @@ export const authApi = createApi({
         body: payload,
       }),
     }),
+
     // logout
-    removeAuth: builder.query({
-      query: () => "/logout",
+    removeAuth: builder.mutation({
+      query: () => ({
+        url: "/logout",
+        method: "POST",
+      }),
     }),
   }),
 });
 
-export const { useAddAuthMutation, useRemoveAuthQuery } = authApi;
+export const { useAddAuthMutation, useRemoveAuthMutation } = authApi;

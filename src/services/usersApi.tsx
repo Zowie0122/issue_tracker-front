@@ -36,10 +36,10 @@ export const usersApi = createApi({
     updateSelf: builder.mutation({
       query: ({ id, payload }) => ({
         url: `users/${id}`,
-        method: "POST",
+        method: "PUT",
         body: payload,
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
     }),
 
     // admin add a new user

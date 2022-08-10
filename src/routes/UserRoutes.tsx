@@ -2,10 +2,10 @@ import { Outlet, Navigate } from "react-router-dom";
 import { useGetSelfQuery } from "../services/usersApi";
 
 const UserRoutes = () => {
-  const { data, isLoading, isSuccess } = useGetSelfQuery({});
-  console.log(data, isLoading, isSuccess);
+  const { isLoading, isSuccess } = useGetSelfQuery({});
   let content;
   if (isLoading) {
+    // TODO: make a loading page
     content = <p>Loading</p>;
   } else if (isSuccess) {
     content = <Outlet />;

@@ -1,45 +1,51 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { Issue, Comment } from '../types';
 
 export const issuesApi = createApi({
-  reducerPath: "issues",
+  reducerPath: 'issues',
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080",
+    baseUrl: 'http://localhost:8080',
 
     // with credentials (session ID cookie)
     prepareHeaders(headers) {
       return headers;
     },
-    credentials: "include",
+    credentials: 'include',
   }),
 
-  tagTypes: ["Issue"],
+  tagTypes: ['Issues', 'Issue'],
 
   endpoints: (builder) => ({
     // get all issues
     getIssues: builder.query({
       query: ({ tag, id }) => {
-        console.log("rerun");
-        if (tag === "received") {
+        if (tag === 'received') {
           return `/issues?receiver=${id}`;
-        } else if (tag === "issued") {
+        } else if (tag === 'issued') {
           return `/issues?issuer=${id}`;
         }
-        return "/issues";
+        return '/issues';
       },
-      providesTags: ["Issue"],
+      providesTags: (result) =>
+        result
+          ? [...result.map(({ id }: any) => ({ type: 'Issues' as const, id })), { type: 'Issues', id: 'LIST' }]
+          : [{ type: 'Issues', id: 'LIST' }],
     }),
 
     // get a single issue by ID
     getIssueById: builder.query({
       query: ({ id }) => `/issues?id=${id}`,
-      transformResponse: (responseData: any[]) => {
+      transformResponse: (responseData: Issue[]) => {
         const {
+          issuer_id,
+          issuer_name,
+          receiver_id,
+          receiver_name,
           title,
           description,
-          receiver_name,
-          issuer_name,
-          updated_at,
+          due_at,
           created_at,
+          updated_at,
           status,
           comments: commentsList,
         } = responseData[0];
@@ -48,50 +54,53 @@ export const issuesApi = createApi({
           issue: {
             title,
             description,
+            issuerId: issuer_id,
             issuer: issuer_name,
+            receiverId: receiver_id,
             receiver: receiver_name,
-            updatedAt: updated_at,
             createdAt: created_at,
+            updatedAt: updated_at,
+            dueAt: due_at,
             status,
           },
-          comments: commentsList.map((comment: any) => ({
+          comments: commentsList.map((comment: Comment) => ({
             issuer: comment.issuer_name,
             contents: comment.contents,
             createdAt: comment.created_at,
           })),
         };
       },
-      providesTags: ["Issue"],
+      providesTags: ['Issue'],
     }),
 
     // add an issue
     addIssue: builder.mutation({
       query: (payload) => ({
-        url: "/issues",
-        method: "POST",
+        url: '/issues',
+        method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ["Issue"],
+      invalidatesTags: [{ type: 'Issues', id: 'LIST' }],
     }),
 
     // update an issue
     updateIssue: builder.mutation({
       query: ({ id, payload }) => ({
         url: `/issues/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: payload,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Issue", id: arg.id }],
+      invalidatesTags: ['Issue'],
     }),
 
     // add a comment
     addComment: builder.mutation({
       query: (payload) => ({
-        url: "/comments",
-        method: "POST",
+        url: '/comments',
+        method: 'POST',
         body: payload,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Issue", id: arg.id }],
+      invalidatesTags: ['Issue'],
     }),
   }),
 });

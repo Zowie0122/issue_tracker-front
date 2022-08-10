@@ -5,13 +5,12 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080",
 
-    // with credentials (session ID cookie)
     prepareHeaders(headers) {
       return headers;
     },
     credentials: "include",
   }),
-  // endpoints
+
   endpoints: (builder) => ({
     // login
     addAuth: builder.mutation({

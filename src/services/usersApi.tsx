@@ -45,7 +45,7 @@ export const usersApi = createApi({
     // admin add a new user
     addUser: builder.mutation({
       query: (payload) => ({
-        url: "admins/users",
+        url: "/admins/users",
         method: "POST",
         body: payload,
       }),
@@ -55,7 +55,7 @@ export const usersApi = createApi({
     // admin update a user
     updateUser: builder.mutation({
       query: ({ id, payload }) => ({
-        url: `admin/users/${id}`,
+        url: `/admins/users/${id}`,
         method: "PUT",
         body: payload,
       }),

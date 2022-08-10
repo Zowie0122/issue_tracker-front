@@ -1,37 +1,39 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { Department } from '../types';
 
 export const departmentsApi = createApi({
-  reducerPath: "departments",
+  reducerPath: 'departments',
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080",
+    baseUrl: 'http://localhost:8080',
 
-    // with credentials (session ID cookie)
     prepareHeaders(headers) {
       return headers;
     },
-    credentials: "include",
+    credentials: 'include',
   }),
 
-  tagTypes: ["Department"],
+  tagTypes: ['Departments'],
 
   endpoints: (builder) => ({
     // get all department
     getDepartments: builder.query({
-      query: () => "/departments",
-      providesTags: ["Department"],
+      query: () => '/departments',
+      providesTags: ['Departments'],
     }),
-
     // add a department
     addDepartment: builder.mutation({
-      query: (payload) => ({
-        url: "/departments",
-        method: "POST",
+      query: (payload: { name: string }) => ({
+        url: '/admins/departments',
+        method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ["Department"],
+      transformResponse: (responseData: Department) => ({
+        id: responseData.id,
+        name: responseData.name,
+      }),
+      invalidatesTags: ['Departments'],
     }),
   }),
 });
 
-export const { useGetDepartmentsQuery, useAddDepartmentMutation } =
-  departmentsApi;
+export const { useGetDepartmentsQuery, useAddDepartmentMutation } = departmentsApi;

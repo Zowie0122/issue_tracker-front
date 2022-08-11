@@ -22,14 +22,14 @@ export const departmentsApi = createApi({
     }),
     // add a department
     addDepartment: builder.mutation({
-      query: (payload: { name: string }) => ({
+      query: (payload) => ({
         url: '/admins/departments',
         method: 'POST',
         body: payload,
       }),
-      transformResponse: (responseData: Department) => ({
-        id: responseData.id,
-        name: responseData.name,
+      transformResponse: (responseData: any) => ({
+        id: responseData?.id,
+        name: responseData?.name,
       }),
       invalidatesTags: ['Departments'],
     }),

@@ -1,19 +1,13 @@
-import { Typography, Link } from "@mui/material";
+import { Typography, Link } from '@mui/material';
 
-const Footer = (props: any) => {
+const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      sx={{ mt: 2 }}
-      {...props}
-    >
-      {"Copyright © "}
+    <Typography variant="body2" color="text.secondary" align="center">
+      {'Copyright © '}
       <Link color="inherit" href="#">
         Zowie Min
-      </Link>{" "}
+      </Link>{' '}
       {currentYear}
     </Typography>
   );

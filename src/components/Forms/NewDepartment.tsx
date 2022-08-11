@@ -1,7 +1,8 @@
 import IssueTrackerForm from './Base';
 import { getValidations } from '../../utils/validation';
+import { FromPropsI } from '../../types';
 
-const NewDepartment = ({ saving, handleCancel, handleSubmit }: any) => {
+const NewDepartment = ({ saving, handleCancel, handleSubmit }: FromPropsI) => {
   return (
     <IssueTrackerForm
       items={[

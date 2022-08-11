@@ -1,7 +1,6 @@
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 
 import Topbar from '../components/Layout/Topbar';
-import ContentCard from '../components/ContentCard';
 import Sidebar from '../components/Layout/Sidebar';
 import Footer from '../components/Layout/Footer';
 
@@ -23,7 +22,9 @@ export default function Main({ children }: Props) {
         }}
       >
         <Topbar />
-        <ContentCard sx={{ height: '90%' }} content={children} />
+        <Paper elevation={3} sx={{ m: 3, p: 3 }}>
+          {children}
+        </Paper>
         <Footer />
       </Box>
     </Box>

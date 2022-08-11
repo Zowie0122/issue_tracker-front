@@ -11,12 +11,13 @@ import Spinner from '../components/Spinner';
 import ErrorAlert from '../components/ErrorAlert';
 import IssueBlock from '../components/Papers/IssueBlock';
 import CommentBlock from '../components/Papers/CommentBlock';
-import Dialog from '../components/Dialogs';
+import Dialog from '../components/Dialog';
 import NewComment from '../components/Forms/NewComment';
 import EditIssue from '../components/Forms/EditIssue';
 
 import { groupUsersByDepartment } from '../utils/users';
 import { ISSUE_STATUS } from '../utils/constants';
+import { Comment, KeyValuePairObj, GroupedUsersByDepartment } from '../types';
 
 function IssueDetail() {
   const { id } = useParams();
@@ -36,9 +37,7 @@ function IssueDetail() {
 
   const [showEditIssue, setShowEditIssue] = useState<boolean>(false);
   const [showNewComment, setShowNewComment] = useState<boolean>(false);
-  const [usersGroupedByDepartment, setUsersGroupedByDepartment] = useState<ReturnType<typeof groupUsersByDepartment>>(
-    []
-  );
+  const [usersGroupedByDepartment, setUsersGroupedByDepartment] = useState<GroupedUsersByDepartment>([]);
   const [addNewCommentErr, setAddNewCommentErr] = useState<typeof errorNewComment>(undefined);
   const [updateIssueErr, setUpdateIssueErr] = useState<typeof errorUpdateIssue>(undefined);
 
@@ -49,7 +48,7 @@ function IssueDetail() {
   }, [loadingUsers, loadingDepartments]);
 
   // add new comment
-  const handleNewCommentSubmit = async (data: { [key: string]: any }) => {
+  const handleNewCommentSubmit = async (data: KeyValuePairObj) => {
     // TODO: fix the type
     data.issueId = id;
     await addComment(data);
@@ -71,8 +70,7 @@ function IssueDetail() {
   }, [savingNewComment]);
 
   // update issue
-  const handleEditIssueSubmit = async (data: { [key: string]: any }) => {
-    // TODO: fix the type
+  const handleEditIssueSubmit = async (data: KeyValuePairObj) => {
     await updateIssue({ id, payload: data });
   };
   const onCloseUpdateIssue = () => {
@@ -100,7 +98,7 @@ function IssueDetail() {
       )}
       <IssueBlock issue={data ? data.issue : {}} />
       <Button onClick={() => setShowNewComment(true)}>Add Comment</Button>
-      {data && data.comments.map((comment: any, i: number) => <CommentBlock key={i} comment={comment} />)}
+      {data && data.comments.map((comment: Comment, i: number) => <CommentBlock key={i} comment={comment} />)}
 
       <Dialog
         open={showNewComment}

@@ -7,8 +7,10 @@ import { AccountCircle, Logout } from '@mui/icons-material';
 import { useGetSelfQuery, useUpdateSelfMutation } from '../../services/usersApi';
 import { useRemoveAuthMutation } from '../../services/authApi';
 
-import Dialog from '../Dialogs';
+import Dialog from '../Dialog';
 import UserSettings from '../Forms/UserSettings';
+
+import { KeyValuePairObj } from '../../types';
 
 const Topbar = () => {
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ const Topbar = () => {
   const [showUserSettings, setShowUserSettings] = useState<boolean>(false);
   const [updateUserSettingsErr, setUpdateUserSettingsErr] = useState<typeof errorUpdateSettings>(undefined);
 
-  const handleUpdateUserSettings = async (data: { [key: string]: any }) => {
+  const handleUpdateUserSettings = async (data: KeyValuePairObj) => {
     await updateSettings({ id: currentUser.id, payload: data });
   };
 
@@ -47,7 +49,7 @@ const Topbar = () => {
 
   return (
     <>
-      <AppBar position="static" color="primary" sx={{ height: '80px' }}>
+      <AppBar position="sticky" color="primary" sx={{ height: '80px' }}>
         <Toolbar
           sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
         >

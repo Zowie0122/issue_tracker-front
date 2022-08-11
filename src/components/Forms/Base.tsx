@@ -19,14 +19,10 @@ import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker as MuiDateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+
 import { SxProps } from '@mui/system';
-
+import { FormOption, FormOptions, FromOptionsGroup, FromOptionsGroups, OnCancelHandler } from '../../types';
 import { getIsoDate } from '../../utils/time';
-
-type Option = {
-  label: string;
-  value: any;
-};
 
 type Item = {
   type: 'text' | 'email' | 'password' | 'selection' | 'groupedSelection' | 'dateTimePicker';
@@ -35,11 +31,8 @@ type Item = {
   defaultValue?: any;
   disabled?: boolean;
   rules?: {};
-  options?: Option[];
-  groups?: {
-    label: string;
-    options: Option[];
-  }[];
+  options?: FormOptions;
+  groups?: FromOptionsGroups;
   minRows?: number;
   maxRows?: number;
   minDateTime?: Date;
@@ -51,7 +44,7 @@ interface PropsI {
   sx?: SxProps;
   items: Item[];
   buttonLabel?: string;
-  onCancel?: () => void;
+  onCancel?: OnCancelHandler;
   onSubmit: SubmitHandler<{ [key: string]: any }>;
   saving: boolean;
   disabled?: boolean;
@@ -63,7 +56,7 @@ const IssueTrackerForm = ({
   buttonLabel = 'Submit',
   onCancel,
   onSubmit,
-  saving,
+  saving = false,
   disabled = false,
 }: PropsI) => {
   const {
@@ -83,7 +76,7 @@ const IssueTrackerForm = ({
   return (
     <Box component="form" sx={{ width: '100%', my: 2, px: 2, ...sx }} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        {items.map((item: any) => {
+        {items.map((item: Item) => {
           if (item.type === 'text' || item.type === 'email') {
             return (
               <Controller
@@ -99,7 +92,7 @@ const IssueTrackerForm = ({
                     label={item.label}
                     multiline={!!(item.minRows || item.maxRows)}
                     minRows={item.minRows}
-                    maxRows={item.rows}
+                    maxRows={item.maxRows}
                     error={!!errors[item.name]}
                     helperText={<>{errors[item.name]?.message}</>}
                     disabled={item.disabled}
@@ -163,7 +156,7 @@ const IssueTrackerForm = ({
                       disabled={item.disabled}
                       defaultValue={item.defaultValue}
                     >
-                      {item.options.map((option: Option, i: number) => (
+                      {item?.options?.map((option: FormOption, i: number) => (
                         <MenuItem key={i} value={option.value}>
                           {option.label}
                         </MenuItem>
@@ -203,9 +196,9 @@ const IssueTrackerForm = ({
                     >
                       <>
                         <option aria-label="None" value="" label="Select One" />
-                        {item.groups.map((group: { label: string; options: Option[] }, i: number) => (
+                        {item?.groups?.map((group: FromOptionsGroup, i: number) => (
                           <optgroup label={group.label} key={`g${i}`}>
-                            {group.options.map((option: any, i: number) => (
+                            {group.options.map((option: FormOption, i: number) => (
                               <option value={option.value} key={`o${i}`}>
                                 {option.label}
                               </option>
@@ -222,7 +215,7 @@ const IssueTrackerForm = ({
               />
             );
           }
-          // TODO: bugs
+
           // for issue deadline(dueAt)
           if (item.type === 'dateTimePicker') {
             return (

@@ -1,7 +1,8 @@
 import IssueTrackerForm from './Base';
 import { getValidations } from '../../utils/validation';
+import { FromPropsI } from '../../types';
 
-const NewComment = ({ saving, handleCancel, handleSubmit }: any) => {
+const NewComment = ({ saving, handleCancel, handleSubmit }: FromPropsI) => {
   return (
     <IssueTrackerForm
       items={[

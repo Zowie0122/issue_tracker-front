@@ -10,13 +10,16 @@ import { useGetDepartmentsQuery } from '../services/departmentsApi';
 import Spinner from '../components/Spinner';
 import ErrorAlert from '../components/ErrorAlert';
 import ActionTable, { Column } from '../components/Tables/ActionTable';
-import DialogPopup from '../components/Dialogs';
+import DialogPopup from '../components/Dialog';
 import NewIssue from '../components/Forms/NewIssue';
 
-import { Issue, IssueListRow } from '../types';
+import { Issue, IssueListRow, KeyValuePairObj } from '../types';
 import { getLocalTimeString } from '../utils/time';
 import { groupUsersByDepartment } from '../utils/users';
 import { ISSUE_LABLE } from '../utils/constants';
+import { formatIssueTitle } from '../utils/format';
+
+import { GroupedUsersByDepartment } from '../types';
 
 type PropsI = {
   tag?: 'received' | 'issued' | 'all';
@@ -43,11 +46,9 @@ const Issues = ({ tag = 'all' }: PropsI) => {
 
   const { data: users, isLoading: loadingUsers, error: errorUsers } = useGetUsersQuery({});
   const { data: departments, isLoading: loadingDepartment, error: errorDepartment } = useGetDepartmentsQuery({});
-  const [usersGroupedByDepartment, setUsersGroupedByDepartment] = useState<ReturnType<typeof groupUsersByDepartment>>(
-    []
-  );
+  const [usersGroupedByDepartment, setUsersGroupedByDepartment] = useState<GroupedUsersByDepartment>([]);
 
-  const [rows, setRows] = useState<IssueListRow[]>([]);
+  const [rows, setRows] = useState<{}[]>([]);
 
   useMemo(() => {
     if (!loadingDepartment && !loadingUsers) {
@@ -56,7 +57,7 @@ const Issues = ({ tag = 'all' }: PropsI) => {
   }, [loadingDepartment, loadingUsers]);
 
   // add new issue
-  const handleSubmit = async (data: { [key: string]: any }) => {
+  const handleSubmit = async (data: KeyValuePairObj) => {
     await addIssue(data);
   };
 
@@ -78,7 +79,7 @@ const Issues = ({ tag = 'all' }: PropsI) => {
   // table columns and rows
   const columns: Column[] = [
     { id: 'id', label: 'Id' },
-    { id: 'title', label: 'Title' },
+    { id: 'title', label: 'Title', format: (value: string) => formatIssueTitle(value, 120) },
     {
       id: 'issued',
       label: 'From',
@@ -109,11 +110,11 @@ const Issues = ({ tag = 'all' }: PropsI) => {
       const _rows = issues
         .map((issue: Issue) => ({
           id: issue.id,
-          issuerId: issue.issuer_id,
+          issuerId: issue.issuerId,
           title: issue.title,
-          issued: issue.issuer_name,
-          received: issue.receiver_name,
-          deadline: issue.due_at,
+          issued: issue.issuerName,
+          received: issue.receiverName,
+          deadline: issue.dueAt,
           status: issue.status,
           detail: {
             isAction: true,

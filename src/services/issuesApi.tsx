@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Issue, Comment } from '../types';
 
 export const issuesApi = createApi({
   reducerPath: 'issues',
@@ -35,7 +34,7 @@ export const issuesApi = createApi({
     // get a single issue by ID
     getIssueById: builder.query({
       query: ({ id }) => `/issues?id=${id}`,
-      transformResponse: (responseData: Issue[]) => {
+      transformResponse: (responseData: any) => {
         const {
           issuer_id,
           issuer_name,
@@ -63,8 +62,8 @@ export const issuesApi = createApi({
             dueAt: due_at,
             status,
           },
-          comments: commentsList.map((comment: Comment) => ({
-            issuer: comment.issuer_name,
+          comments: commentsList.map((comment: any) => ({
+            issuerName: comment.issuer_name,
             contents: comment.contents,
             createdAt: comment.created_at,
           })),

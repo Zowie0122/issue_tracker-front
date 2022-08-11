@@ -1,19 +1,6 @@
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
-import {
-  GetApp,
-  Send,
-  AllInbox,
-  Group,
-  Business,
-  Settings,
-} from "@mui/icons-material";
+import { GetApp, Send, AllInbox, Group, Business, Settings } from '@mui/icons-material';
 
 const icons: {
   [key: string]: JSX.Element;

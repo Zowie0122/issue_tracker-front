@@ -1,26 +1,35 @@
-import { Paper, Grid, Avatar, Typography } from "@mui/material";
-import { timeSince } from "../../utils/time";
+import { Paper, Grid, Avatar, Typography } from '@mui/material';
+import { formatTimeSince } from '../../utils/time';
+import { Issue } from '../../types';
 
-const IssueBlock = ({ issue }: any) => {
+interface PropI {
+  issue: Issue;
+}
+
+const IssueBlock = ({ issue }: PropI) => {
   return (
-    <Paper sx={{ p: 2, mt: 1 }}>
-      <Typography variant="h4">{issue.title}</Typography>
+    <Paper sx={{ p: 3, my: 2 }}>
+      <Typography variant="h4" color="primary" sx={{ my: 2 }}>
+        {issue.title}
+      </Typography>
       <Grid container wrap="nowrap" spacing={2}>
         <Grid item>
-          <Avatar alt={issue.issuer} src={"../../public/avatar_default.png"} />
+          <Avatar alt={issue.issuerName} src={'../../public/avatar_default.png'} />
         </Grid>
         <Grid justifyContent="left" item xs zeroMinWidth>
-          <Typography variant="h5">{issue.issuer}</Typography>
-          <Typography variant="body2">{issue.description}</Typography>
-          <Typography variant="caption">{`posted ${timeSince(
-            issue.createdAt
-          )} ago`}</Typography>
-          <Typography variant="caption">{`updated ${timeSince(
-            issue.updatedAt
-          )} ago`}</Typography>
-          <Typography variant="caption">{`status ${issue.status}`}</Typography>
+          <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+            {issue.issuerName}
+          </Typography>
+          <Typography variant="caption" sx={{ textAlign: 'left' }}>
+            {issue.updatedAt && formatTimeSince('last updated at', issue.updatedAt)}
+          </Typography>
+          {/* <Typography variant="caption">{`updated ${timeSince(issue.updatedAt)} ago`}</Typography>
+          <Typography variant="caption">{`status ${issue.status}`}</Typography> */}
         </Grid>
       </Grid>
+      <Typography variant="body1" sx={{ my: 2 }}>
+        {issue.description}
+      </Typography>
     </Paper>
   );
 };

@@ -1,8 +1,8 @@
 import IssueTrackerForm from './Base';
-import { groupUsersByDepartment } from '../../utils/users';
 import { getValidations } from '../../utils/validation';
+import { FromPropsI, FormOptions, GroupedUsersByDepartment } from '../../types';
 
-interface PropsI {
+interface PropsI extends FromPropsI {
   issue: {
     title: string;
     description: string;
@@ -10,11 +10,8 @@ interface PropsI {
     dueAt: Date;
     status: 0 | 1;
   };
-  statusList: any;
-  usersGroupedByDepartment: ReturnType<typeof groupUsersByDepartment>;
-  saving: boolean;
-  handleCancel: () => void;
-  handleSubmit: (data: any) => void;
+  statusList: FormOptions;
+  usersGroupedByDepartment: GroupedUsersByDepartment;
 }
 
 const EditIssue = ({ issue, usersGroupedByDepartment, statusList, saving, handleCancel, handleSubmit }: PropsI) => {

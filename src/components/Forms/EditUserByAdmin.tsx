@@ -1,7 +1,28 @@
 import IssueTrackerForm from './Base';
 import { getValidations } from '../../utils/validation';
+import { FromPropsI, FormOptions } from '../../types';
 
-const EditUserByAdmin = ({ user, rolesList, departmentsList, statusList, saving, handleCancel, handleSubmit }: any) => {
+interface PropsI extends FromPropsI {
+  user: {
+    email: string;
+    role_id: number;
+    department_id: number;
+    status: 0 | 1;
+  };
+  statusList: FormOptions;
+  rolesList: FormOptions;
+  departmentsList: FormOptions;
+}
+
+const EditUserByAdmin = ({
+  user,
+  rolesList,
+  departmentsList,
+  statusList,
+  saving,
+  handleCancel,
+  handleSubmit,
+}: PropsI) => {
   return (
     <IssueTrackerForm
       items={[

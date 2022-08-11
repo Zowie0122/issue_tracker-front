@@ -1,7 +1,12 @@
 import IssueTrackerForm from './Base';
 import { getValidations } from '../../utils/validation';
+import { FromPropsI, GroupedUsersByDepartment } from '../../types';
 
-const NewIssue = ({ usersGroupedByDepartment, saving, handleCancel, handleSubmit }: any) => {
+interface PropsI extends FromPropsI {
+  usersGroupedByDepartment: GroupedUsersByDepartment;
+}
+
+const NewIssue = ({ usersGroupedByDepartment, saving, handleCancel, handleSubmit }: PropsI) => {
   return (
     <IssueTrackerForm
       items={[

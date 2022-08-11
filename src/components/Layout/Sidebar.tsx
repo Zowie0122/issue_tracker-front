@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Drawer, Button as MuiButton } from '@mui/material';
+import { Drawer, Toolbar } from '@mui/material';
+
 import IconList from '../Lists/IconList';
+
 import { useGetSelfQuery } from '../../services/usersApi';
 
 import { PERMISSIONS } from '../../utils/constants';
 
 const drawerWidth = 240;
 
-interface Props {
+interface PropsI {
   isMobile: boolean;
 }
 
@@ -27,7 +28,7 @@ const adminItems = [
   },
 ];
 
-const Sidebar = ({ isMobile }: Props) => {
+const Sidebar = ({ isMobile }: PropsI) => {
   const { data, isLoading } = useGetSelfQuery({});
   const [items, setItems] = useState(defaultItems);
 
@@ -52,6 +53,7 @@ const Sidebar = ({ isMobile }: Props) => {
       }}
       anchor="left"
     >
+      <Toolbar />
       <IconList items={items} />
     </Drawer>
   );

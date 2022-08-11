@@ -8,11 +8,11 @@ import { useGetDepartmentsQuery } from '../services/departmentsApi';
 import Spinner from '../components/Spinner';
 import ErrorAlert from '../components/ErrorAlert';
 import ActionTable, { Column } from '../components/Tables/ActionTable';
-import DialogPopup from '../components/Dialogs';
+import DialogPopup from '../components/Dialog';
 import NewUser from '../components/Forms/NewUser';
 import EditUserByAdmin from '../components/Forms/EditUserByAdmin';
 
-import { User, Department } from '../types';
+import { User, Department, FormOptions, KeyValuePairObj } from '../types';
 import { getLocalTimeString } from '../utils/time';
 import { PERMISSIONS, USER_STATUS } from '../utils/constants';
 
@@ -25,7 +25,7 @@ const AdminUsers = () => {
 
   const { data: users, isLoading: loadingUsers, error: errorUsers } = useGetUsersQuery({});
   const { data: departments, isLoading: loadingDepartments, error: errorDepartments } = useGetDepartmentsQuery({});
-  const [departmentsList, setDepartmentsList] = useState<Department[]>([]);
+  const [departmentsList, setDepartmentsList] = useState<FormOptions>([]);
 
   const [showNewUser, setShowNewUser] = useState<boolean>(false);
   const [addUser, { isLoading: savingNewUser, isSuccess: successNewUser, error: errorNewUser }] = useAddUserMutation();
@@ -49,7 +49,7 @@ const AdminUsers = () => {
     }
   }, [loadingDepartments]);
 
-  const handleNewUserSubmit = async (data: { [key: string]: any }) => {
+  const handleNewUserSubmit = async (data: KeyValuePairObj) => {
     await addUser(data);
   };
 
@@ -63,13 +63,12 @@ const AdminUsers = () => {
   }, [savingNewUser]);
 
   // since redux toolkit RTK doesn't support reset cache yet, use local state to track and reset the error
-  // https://stackoverflow.com/questions/68982391/change-a-mutation-value-when-fetching-another-query-rtk-query/68989101#68989101
   useEffect(() => {
     setAddNewUserErr(errorNewUser);
   }, [errorNewUser]);
 
   // update a user
-  const handleUpdateUserSubmit = async (data: { [key: string]: any }) => {
+  const handleUpdateUserSubmit = async (data: KeyValuePairObj) => {
     await updateUser({ id: selectedUser, payload: data });
   };
 
@@ -144,7 +143,7 @@ const AdminUsers = () => {
               icon: 'edit',
               iconSize: 'small',
               callback: (row: any) => {
-                setSelectedUser(row.id);
+                setSelectedUser(row?.id);
                 setShowEditUser(true);
               },
             },
@@ -184,7 +183,7 @@ const AdminUsers = () => {
         title="Update User"
         content={
           <EditUserByAdmin
-            user={users && users.find((user: any) => user.id === selectedUser)} // TODO: fix the type
+            user={users && users.find((user: any) => user.id === selectedUser)}
             rolesList={rolesList}
             departmentsList={departmentsList}
             statusList={statusList}

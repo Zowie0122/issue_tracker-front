@@ -8,6 +8,7 @@ import { AccountCircle } from '@mui/icons-material';
 import IssueTrackerForm from '../components/Forms/Base';
 import Footer from '../components/Layout/Footer';
 
+import { getValidations } from '../utils/validation';
 import { KeyValuePairObj } from '../types';
 
 const SignIn = () => {
@@ -20,6 +21,7 @@ const SignIn = () => {
   };
 
   useEffect(() => {
+    console.log(isLoading, isSuccess);
     if (isSuccess) {
       navigate('/issues/received');
     }
@@ -68,14 +70,14 @@ const SignIn = () => {
                 label: 'Email',
                 name: 'email',
                 defaultValue: '',
-                rules: { required: 'Required field' },
+                rules: getValidations(['required']),
               },
               {
                 type: 'password',
                 label: 'Password',
                 name: 'password',
                 defaultValue: '',
-                rules: { required: true },
+                rules: getValidations(['required']), // Not show the password rule to the public on purpose
               },
             ]}
             buttonLabel="Sign in"

@@ -10,22 +10,16 @@ import ActionTable, { Column } from '../components/Tables/ActionTable';
 import DialogPopup from '../components/Dialog';
 import NewDepartment from '../components/Forms/NewDepartment';
 
-import { Department, KeyValuePairObj } from '../types';
+import { KeyValuePairObj } from '../types';
 
 const AdminDepartments = () => {
-  const {
-    data: departments,
-    isLoading: loadingDepartments,
-    error: errorDepartments,
-    refetch,
-  } = useGetDepartmentsQuery({});
+  const { data: departments, isLoading: loadingDepartments, error: errorDepartments } = useGetDepartmentsQuery({});
 
   const [
     addDepartment,
     { isLoading: savingNewDepartment, isSuccess: successNewDepartment, error: errorNewDepartment },
   ] = useAddDepartmentMutation();
 
-  const [rows, setRows] = useState<Department[]>([]);
   const [showNewDepartment, setShowNewDepartment] = useState<boolean>(false);
   const [addNewDepartmentErr, setAddNewDepartmentErr] = useState<typeof errorNewDepartment>(undefined);
 
@@ -40,7 +34,7 @@ const AdminDepartments = () => {
 
   useMemo(() => {
     if (!savingNewDepartment && successNewDepartment) setShowNewDepartment(false);
-    refetch();
+    console.log('Now refreshig');
   }, [savingNewDepartment]);
 
   // since redux toolkit RTK doesn't support reset cache yet, use local state to track and reset the error
@@ -55,12 +49,6 @@ const AdminDepartments = () => {
     { id: 'name', label: 'Department Name' },
   ];
 
-  useMemo(() => {
-    if (!loadingDepartments && Array.isArray(departments) && departments.length > 0) {
-      setRows(departments);
-    }
-  }, [loadingDepartments]);
-
   if (loadingDepartments) return <Spinner />;
   else if (errorDepartments) return <ErrorAlert errors={[errorDepartments]} />;
   return (
@@ -68,7 +56,7 @@ const AdminDepartments = () => {
       <Button sx={{ m: 2 }} variant="contained" onClick={() => setShowNewDepartment(true)}>
         New
       </Button>
-      <ActionTable columns={columns} rows={rows} loading={loadingDepartments} />
+      <ActionTable columns={columns} rows={departments} loading={loadingDepartments} />
       <DialogPopup
         open={showNewDepartment}
         onClose={onCloseNewDepartment}

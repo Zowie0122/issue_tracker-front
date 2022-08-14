@@ -34,7 +34,7 @@ const Issues = ({ tag = 'all' }: PropsI) => {
     data: issues,
     isLoading: loadingIssues,
     error: errorIssues,
-    refetch,
+    isFetching: fetchingIssues,
   } = useGetIssuesQuery({
     tag,
     id: currentUser.id,
@@ -69,11 +69,9 @@ const Issues = ({ tag = 'all' }: PropsI) => {
 
   useMemo(() => {
     if (!savingNewIssue && isSuccessNewIssue) setShowNewIssue(false);
-    refetch();
   }, [savingNewIssue]);
 
   // since redux toolkit RTK doesn't support reset cache yet, use local state to track and reset the error
-  // https://stackoverflow.com/questions/68982391/change-a-mutation-value-when-fetching-another-query-rtk-query/68989101#68989101
   useEffect(() => {
     setAddUserErr(errorNewIssue);
   }, [errorNewIssue]);
@@ -108,7 +106,7 @@ const Issues = ({ tag = 'all' }: PropsI) => {
 
   // TODO: could use transform or here? but there is a callback
   useMemo(() => {
-    if (!loadingIssues && issues && issues.length > 0) {
+    if (!loadingIssues && !fetchingIssues && issues && issues.length > 0) {
       console.log(issues);
       const _rows = issues
         .map((issue: Issue) => ({
@@ -132,9 +130,9 @@ const Issues = ({ tag = 'all' }: PropsI) => {
 
       setRows(_rows);
     }
-  }, [loadingIssues]);
+  }, [loadingIssues, fetchingIssues]);
 
-  if (loadingIssues) return <Spinner />;
+  if (loadingIssues || fetchingIssues) return <Spinner />;
   else if (errorIssues) return <ErrorAlert errors={[errorIssues]} />;
 
   return (

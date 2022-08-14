@@ -59,7 +59,6 @@ function IssueDetail() {
   };
 
   // since redux toolkit RTK doesn't support reset cache yet, use local state to track and reset the error
-  // https://stackoverflow.com/questions/68982391/change-a-mutation-value-when-fetching-another-query-rtk-query/68989101#68989101
   useEffect(() => {
     setAddNewCommentErr(errorNewComment);
   }, [errorNewComment]);

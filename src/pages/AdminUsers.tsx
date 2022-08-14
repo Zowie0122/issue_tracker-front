@@ -24,7 +24,7 @@ const AdminUsers = () => {
   // we have admin route guard, so this sopposed to be save
   const { data: currentUser } = useGetSelfQuery({});
 
-  const { data: users, isLoading: loadingUsers, error: errorUsers } = useGetUsersQuery({});
+  const { data: users, isLoading: loadingUsers, error: errorUsers, isFetching: fetchingUsers } = useGetUsersQuery({});
   const { data: departments, isLoading: loadingDepartments, error: errorDepartments } = useGetDepartmentsQuery({});
   const [departmentsList, setDepartmentsList] = useState<FormOptions>([]);
 
@@ -124,6 +124,7 @@ const AdminUsers = () => {
     if (
       !loadingUsers &&
       !loadingDepartments &&
+      !fetchingUsers &&
       users && // TODO: fix the type
       users.length > 0 &&
       Array.isArray(departments) &&
@@ -154,7 +155,7 @@ const AdminUsers = () => {
           .filter((row: any) => row.id !== currentUser.id) // remove the current admin from the list
       );
     }
-  }, [loadingUsers, loadingDepartments]);
+  }, [loadingUsers, loadingDepartments, fetchingUsers]);
 
   if (loadingUsers || loadingDepartments) return <Spinner />;
   else if (errorUsers || errorDepartments) return <ErrorAlert errors={[errorUsers, errorDepartments]} />;

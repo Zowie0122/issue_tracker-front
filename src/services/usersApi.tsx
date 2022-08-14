@@ -59,7 +59,7 @@ export const usersApi = createApi({
         method: 'PUT',
         body: payload,
       }),
-      invalidatesTags: ['User'],
+      invalidatesTags: ['User', 'Users'],
     }),
   }),
 });

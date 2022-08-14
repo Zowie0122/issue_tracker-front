@@ -17,9 +17,10 @@ export const departmentsApi = createApi({
   endpoints: (builder) => ({
     // get all department
     getDepartments: builder.query({
-      query: () => '/departments',
+      query: ({}) => '/departments',
       providesTags: ['Departments'],
     }),
+
     // add a department
     addDepartment: builder.mutation({
       query: (payload) => ({

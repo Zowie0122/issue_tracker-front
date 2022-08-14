@@ -13,4 +13,6 @@ export const ISSUE_STATUS = {
   inactive: { label: 'Ongoing', value: 0 },
 };
 
-export const ISSUE_LABLE = ['Onging', 'Resolved'];
+export const ISSUE_LABLE = ['Ongoing', 'Resolved'];
+export const ROLE_LABLE = ['', 'Admin', 'User'];
+export const USER_STATUS_LABLE = ['Inactive', 'Active'];

@@ -33,20 +33,22 @@ const intervals = [
   { label: 'second', seconds: 1 },
 ];
 
-export const timeSince = (date: any) => {
+export const getTimeSince = (date: any) => {
   date = new Date(date);
   if (date instanceof Date) {
     const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
     const interval = intervals.find((i) => i.seconds < seconds);
+    if (seconds === 0) return '0 second';
     if (interval) {
       const count = Math.floor(seconds / interval.seconds);
+      console.log(count, interval.label);
       return `${count} ${interval.label}${count !== 1 ? 's' : ''}`;
     }
   }
-  return null;
 };
 
 export const formatTimeSince = (prefix: string, timeAgo: string | Date | null): string => {
-  if (timeAgo) return `${prefix} ${timeSince(timeAgo)} ago`;
-  return '';
+  const timeSince = getTimeSince(timeAgo);
+  if (!timeSince) return '';
+  return timeSince === '0 second' ? `${prefix} just now` : `${prefix} ${timeSince} ago`;
 };

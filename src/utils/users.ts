@@ -18,7 +18,7 @@ export const groupUsersByDepartment = (
       };
 
       if (userToBeRemoved) {
-        result.options.filter((option) => option.value !== userToBeRemoved);
+        result.options = result.options.filter((option) => option.value !== userToBeRemoved);
       }
       return result;
     });

@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { deepSnakeToCamel } from '../utils/format';
+import { KeyValuePairObj } from '../types';
 
 export const issuesApi = createApi({
   reducerPath: 'issues',
@@ -25,49 +27,20 @@ export const issuesApi = createApi({
         }
         return '/issues';
       },
-      providesTags: (result) =>
-        result
-          ? [...result.map(({ id }: any) => ({ type: 'Issues' as const, id })), { type: 'Issues', id: 'LIST' }]
-          : [{ type: 'Issues', id: 'LIST' }],
+      transformResponse: (responseData: any) => {
+        return responseData.map((issueObj: KeyValuePairObj) => deepSnakeToCamel(issueObj));
+      },
+      providesTags: ['Issues'],
     }),
 
     // get a single issue by ID
     getIssueById: builder.query({
       query: ({ id }) => `/issues?id=${id}`,
       transformResponse: (responseData: any) => {
-        const {
-          issuer_id,
-          issuer_name,
-          receiver_id,
-          receiver_name,
-          title,
-          description,
-          due_at,
-          created_at,
-          updated_at,
-          status,
-          comments: commentsList,
-        } = responseData[0];
-
-        return {
-          issue: {
-            title,
-            description,
-            issuerId: issuer_id,
-            issuer: issuer_name,
-            receiverId: receiver_id,
-            receiver: receiver_name,
-            createdAt: created_at,
-            updatedAt: updated_at,
-            dueAt: due_at,
-            status,
-          },
-          comments: commentsList.map((comment: any) => ({
-            issuerName: comment.issuer_name,
-            contents: comment.contents,
-            createdAt: comment.created_at,
-          })),
-        };
+        return responseData.map((issueObj: KeyValuePairObj) => ({
+          ...deepSnakeToCamel(issueObj),
+          comments: issueObj.comments.map((comment: KeyValuePairObj) => deepSnakeToCamel(comment)),
+        }))[0];
       },
       providesTags: ['Issue'],
     }),
@@ -79,7 +52,7 @@ export const issuesApi = createApi({
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: [{ type: 'Issues', id: 'LIST' }],
+      invalidatesTags: ['Issues'],
     }),
 
     // update an issue
@@ -89,7 +62,7 @@ export const issuesApi = createApi({
         method: 'PUT',
         body: payload,
       }),
-      invalidatesTags: ['Issue'],
+      invalidatesTags: ['Issue', 'Issues'],
     }),
 
     // add a comment

@@ -21,7 +21,6 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    console.log(isLoading, isSuccess);
     if (isSuccess) {
       navigate('/issues/received');
     }

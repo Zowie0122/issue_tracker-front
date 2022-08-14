@@ -54,7 +54,7 @@ const ActionTable = ({ sx, columns = [{ id: '', label: '' }], rows = [], loading
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align ?? 'center'}>
-                          {value.isAction ? (
+                          {value?.isAction ? (
                             <IconButton
                               aria-label={row.icon}
                               component="label"

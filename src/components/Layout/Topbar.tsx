@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 
 import { Toolbar, AppBar, IconButton } from '@mui/material';
 import { AccountCircle, Logout } from '@mui/icons-material';
 
-import { useGetSelfQuery, useUpdateSelfMutation } from '../../services/usersApi';
-import { useRemoveAuthMutation } from '../../services/authApi';
+import { useGetSelfQuery, usersApi, useUpdateSelfMutation } from '../../services/usersApi';
+import { authApi, useRemoveAuthMutation } from '../../services/authApi';
 
 import Dialog from '../Dialog';
 import UserSettings from '../Forms/UserSettings';
@@ -43,7 +43,7 @@ const Topbar = () => {
 
   useEffect(() => {
     if (loggedOut) {
-      navigate('/login');
+      window.location.replace('/login'); // clear the state
     }
   }, [loggedOut]);
 
@@ -63,7 +63,13 @@ const Topbar = () => {
           >
             <AccountCircle sx={{ fontSize: '40px' }} />
           </IconButton>
-          <IconButton edge="end" aria-label="logout" aria-controls="logout" color="inherit" onClick={removeAuth}>
+          <IconButton
+            edge="end"
+            aria-label="logout"
+            aria-controls="logout"
+            color="inherit"
+            onClick={() => removeAuth({})}
+          >
             <Logout sx={{ fontSize: '40px' }} />
           </IconButton>
         </Toolbar>
@@ -71,7 +77,7 @@ const Topbar = () => {
       <Dialog
         open={showUserSettings}
         onClose={onCloseEditSettings}
-        title="Edit Issue"
+        title="Settings"
         content={
           <UserSettings
             user={currentUser && { firstName: currentUser.first_name, lastName: currentUser.last_name }}

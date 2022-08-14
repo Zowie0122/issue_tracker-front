@@ -14,7 +14,8 @@ import EditUserByAdmin from '../components/Forms/EditUserByAdmin';
 
 import { User, Department, FormOptions, KeyValuePairObj } from '../types';
 import { getLocalTimeString } from '../utils/time';
-import { PERMISSIONS, USER_STATUS } from '../utils/constants';
+import { PERMISSIONS, USER_STATUS, ROLE_LABLE, USER_STATUS_LABLE } from '../utils/constants';
+import { toShortStr } from '../utils/format';
 
 const rolesList = Object.values(PERMISSIONS);
 const statusList = Object.values(USER_STATUS);
@@ -87,7 +88,7 @@ const AdminUsers = () => {
 
   // table columns and rows
   const columns: Column[] = [
-    { id: 'id', label: 'ID' },
+    { id: 'id', label: 'ID', format: (value: string) => toShortStr(value, 8) },
     { id: 'firstName', label: 'First Name' },
     { id: 'lastName', label: 'Last Name' },
     {
@@ -97,6 +98,7 @@ const AdminUsers = () => {
     {
       id: 'role',
       label: 'Role',
+      format: (value: number) => ROLE_LABLE[value],
     },
     {
       id: 'department',
@@ -105,6 +107,7 @@ const AdminUsers = () => {
     {
       id: 'status',
       label: 'Status',
+      format: (value: number) => USER_STATUS_LABLE[value],
     },
     {
       id: 'createdAt',

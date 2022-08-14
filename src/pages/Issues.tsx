@@ -17,7 +17,7 @@ import { Issue, IssueListRow, KeyValuePairObj } from '../types';
 import { getLocalTimeString } from '../utils/time';
 import { groupUsersByDepartment } from '../utils/users';
 import { ISSUE_LABLE } from '../utils/constants';
-import { formatIssueTitle } from '../utils/format';
+import { toShortStr } from '../utils/format';
 
 import { GroupedUsersByDepartment } from '../types';
 
@@ -34,6 +34,7 @@ const Issues = ({ tag = 'all' }: PropsI) => {
     data: issues,
     isLoading: loadingIssues,
     error: errorIssues,
+    refetch,
   } = useGetIssuesQuery({
     tag,
     id: currentUser.id,
@@ -68,6 +69,7 @@ const Issues = ({ tag = 'all' }: PropsI) => {
 
   useMemo(() => {
     if (!savingNewIssue && isSuccessNewIssue) setShowNewIssue(false);
+    refetch();
   }, [savingNewIssue]);
 
   // since redux toolkit RTK doesn't support reset cache yet, use local state to track and reset the error
@@ -79,7 +81,7 @@ const Issues = ({ tag = 'all' }: PropsI) => {
   // table columns and rows
   const columns: Column[] = [
     { id: 'id', label: 'Id' },
-    { id: 'title', label: 'Title', format: (value: string) => formatIssueTitle(value, 120) },
+    { id: 'title', label: 'Title', format: (value: string) => toShortStr(value, 120) },
     {
       id: 'issued',
       label: 'From',
@@ -107,6 +109,7 @@ const Issues = ({ tag = 'all' }: PropsI) => {
   // TODO: could use transform or here? but there is a callback
   useMemo(() => {
     if (!loadingIssues && issues && issues.length > 0) {
+      console.log(issues);
       const _rows = issues
         .map((issue: Issue) => ({
           id: issue.id,

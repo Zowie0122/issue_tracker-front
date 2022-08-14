@@ -1,5 +1,9 @@
-import { Paper, Grid, Avatar, Typography } from '@mui/material';
-import { formatTimeSince } from '../../utils/time';
+import { Paper, Box, Stack, Button, Typography } from '@mui/material';
+
+import IconText from '../IconText';
+import AvatarName from '../AvatarName';
+import { formatTimeSince, getLocalTimeString } from '../../utils/time';
+import { ISSUE_LABLE } from '../../utils/constants';
 import { Issue } from '../../types';
 
 interface PropI {
@@ -9,24 +13,27 @@ interface PropI {
 const IssueBlock = ({ issue }: PropI) => {
   return (
     <Paper sx={{ p: 3, my: 2 }}>
-      <Typography variant="h4" color="primary" sx={{ my: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+        <Stack direction="row" spacing={2}>
+          {issue.status !== undefined && (
+            <IconText
+              text={ISSUE_LABLE[issue.status]}
+              icon={ISSUE_LABLE[issue.status] === 'Ongoing' ? 'ongoing' : 'resolved'}
+            />
+          )}
+          {issue.dueAt && <IconText label="Deadline" text={getLocalTimeString(issue.dueAt)} icon="deadline" />}
+          {issue.receiverName && <IconText label="Assigned to" text={issue.receiverName} icon="user" />}
+        </Stack>
+      </Box>
+      <Typography variant="h6" color="primary" sx={{ my: 2, fontWeight: 'bold' }}>
         {issue.title}
       </Typography>
-      <Grid container wrap="nowrap" spacing={2}>
-        <Grid item>
-          <Avatar alt={issue.issuerName} src={'../../public/avatar_default.png'} />
-        </Grid>
-        <Grid justifyContent="left" item xs zeroMinWidth>
-          <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-            {issue.issuerName}
-          </Typography>
-          <Typography variant="caption" sx={{ textAlign: 'left' }}>
-            {issue.updatedAt && formatTimeSince('last updated at', issue.updatedAt)}
-          </Typography>
-          {/* <Typography variant="caption">{`updated ${timeSince(issue.updatedAt)} ago`}</Typography>
-          <Typography variant="caption">{`status ${issue.status}`}</Typography> */}
-        </Grid>
-      </Grid>
+      {issue.issuerName && (
+        <AvatarName
+          name={issue.issuerName}
+          caption={issue.updatedAt && formatTimeSince('last updated ', issue.updatedAt)}
+        />
+      )}
       <Typography variant="body1" sx={{ my: 2 }}>
         {issue.description}
       </Typography>

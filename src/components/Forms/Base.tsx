@@ -195,7 +195,7 @@ const IssueTrackerForm = ({
                       defaultValue={item.defaultValue ?? null}
                     >
                       <>
-                        <option aria-label="None" value="" label="Select One" />
+                        <option aria-label="None" key="none" label="Select One" value="" />
                         {item?.groups?.map((group: FromOptionsGroup, i: number) => (
                           <optgroup label={group.label} key={`g${i}`}>
                             {group.options.map((option: FormOption, i: number) => (

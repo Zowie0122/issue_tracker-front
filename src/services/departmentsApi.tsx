@@ -27,10 +27,6 @@ export const departmentsApi = createApi({
         method: 'POST',
         body: payload,
       }),
-      transformResponse: (responseData: any) => ({
-        id: responseData?.id,
-        name: responseData?.name,
-      }),
       invalidatesTags: ['Departments'],
     }),
   }),

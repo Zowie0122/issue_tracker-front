@@ -27,7 +27,7 @@ function IssueDetail() {
 
   const { data: departments, isLoading: loadingDepartments, error: errorDepartments } = useGetDepartmentsQuery({});
 
-  const { data, isLoading: loadingIssue, error: errorIssue } = useGetIssueByIdQuery({ id });
+  const { data: issue, isLoading: loadingIssue, error: errorIssue } = useGetIssueByIdQuery({ id });
 
   const [addComment, { isLoading: savingNewComment, isSuccess: successNewComment, error: errorNewComment }] =
     useAddCommentMutation();
@@ -49,7 +49,6 @@ function IssueDetail() {
 
   // add new comment
   const handleNewCommentSubmit = async (data: KeyValuePairObj) => {
-    // TODO: fix the type
     data.issueId = id;
     await addComment(data);
   };
@@ -91,14 +90,14 @@ function IssueDetail() {
 
   return (
     <>
-      {data && data.issue.issuerId === currentUser.id && (
+      {issue && issue.issuerId === currentUser.id && (
         <Button sx={{ m: 2 }} variant="contained" onClick={() => setShowEditIssue(true)}>
           Edit
         </Button>
       )}
-      <IssueBlock issue={data ? data.issue : {}} />
+      <IssueBlock issue={issue ? issue : {}} />
       <Button onClick={() => setShowNewComment(true)}>Add Comment</Button>
-      {data && data.comments.map((comment: Comment, i: number) => <CommentBlock key={i} comment={comment} />)}
+      {issue && issue.comments.map((comment: Comment, i: number) => <CommentBlock key={i} comment={comment} />)}
 
       <Dialog
         open={showNewComment}
@@ -115,7 +114,7 @@ function IssueDetail() {
           (errorDepartments || errorUsers || addNewCommentErr) && [errorDepartments, errorUsers, addNewCommentErr]
         }
       />
-      {data && (
+      {issue && (
         <Dialog
           open={showEditIssue}
           onClose={onCloseUpdateIssue}
@@ -123,11 +122,11 @@ function IssueDetail() {
           content={
             <EditIssue
               issue={{
-                title: data.issue.title,
-                description: data.issue.description,
-                receiverId: data.issue.receiverId,
-                dueAt: new Date(data.issue.dueAt),
-                status: data.issue.status,
+                title: issue.title,
+                description: issue.description,
+                receiverId: issue.receiverId,
+                dueAt: new Date(issue.dueAt),
+                status: issue.status,
               }}
               usersGroupedByDepartment={usersGroupedByDepartment}
               statusList={Object.values(ISSUE_STATUS)}

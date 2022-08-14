@@ -13,7 +13,12 @@ import NewDepartment from '../components/Forms/NewDepartment';
 import { Department, KeyValuePairObj } from '../types';
 
 const AdminDepartments = () => {
-  const { data: departments, isLoading: loadingDepartments, error: errorDepartments } = useGetDepartmentsQuery({});
+  const {
+    data: departments,
+    isLoading: loadingDepartments,
+    error: errorDepartments,
+    refetch,
+  } = useGetDepartmentsQuery({});
 
   const [
     addDepartment,
@@ -35,6 +40,7 @@ const AdminDepartments = () => {
 
   useMemo(() => {
     if (!savingNewDepartment && successNewDepartment) setShowNewDepartment(false);
+    refetch();
   }, [savingNewDepartment]);
 
   // since redux toolkit RTK doesn't support reset cache yet, use local state to track and reset the error

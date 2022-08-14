@@ -29,14 +29,14 @@ const adminItems = [
 ];
 
 const Sidebar = ({ isMobile }: PropsI) => {
-  const { data, isLoading } = useGetSelfQuery({});
+  const { data: user, isLoading: loadingUser } = useGetSelfQuery({});
   const [items, setItems] = useState(defaultItems);
 
   useEffect(() => {
-    if (!isLoading && data && data.role_id === PERMISSIONS.admin.value) {
+    if (!loadingUser && user && user.role_id === PERMISSIONS.admin.value) {
       setItems([...defaultItems, ...adminItems]);
     }
-  }, [data]);
+  }, [loadingUser]);
 
   return (
     <Drawer

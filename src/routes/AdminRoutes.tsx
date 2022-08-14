@@ -1,20 +1,20 @@
-import { Outlet, Navigate } from "react-router-dom";
-import { useGetSelfQuery } from "../services/usersApi";
-import { PERMISSIONS } from "../utils/constants";
+import { useEffect, useState } from 'react';
+import { Outlet, Navigate } from 'react-router-dom';
+import { useGetSelfQuery } from '../services/usersApi';
+
+import Spinner from '../components/Spinner';
+import { PERMISSIONS } from '../utils/constants';
 
 const AdminRoutes = () => {
-  const { data, isLoading, isSuccess } = useGetSelfQuery({});
-  let content;
-  if (isLoading) {
-    // TODO: make a loading page
-    content = <p>Loading</p>;
-  } else if (isSuccess && data.role_id === PERMISSIONS.admin.value) {
-    content = <Outlet />;
-  } else if (isSuccess && data.role_id === PERMISSIONS.user.value) {
-    content = <Navigate to="/issues/received" />;
-  } else {
-    content = <Navigate to="/login" />;
-  }
+  const { data: user, isSuccess, isError } = useGetSelfQuery({});
+  const [content, setContent] = useState(<Spinner />);
+
+  useEffect(() => {
+    if (isSuccess && user.rold_id === PERMISSIONS.admin.value) setContent(<Outlet />);
+    if (isSuccess && user.rold_id !== PERMISSIONS.admin.value) setContent(<Navigate to="/issues/received" />);
+    if (isError) setContent(<Navigate to="/login" />);
+  }, [isSuccess, isError]);
+
   return content;
 };
 

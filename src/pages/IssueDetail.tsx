@@ -71,6 +71,7 @@ function IssueDetail() {
   const handleEditIssueSubmit = async (data: KeyValuePairObj) => {
     await updateIssue({ id, payload: data });
   };
+
   const onCloseUpdateIssue = () => {
     setShowEditIssue(false);
     setUpdateIssueErr(undefined);

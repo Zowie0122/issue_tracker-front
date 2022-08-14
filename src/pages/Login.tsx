@@ -80,8 +80,8 @@ const SignIn = () => {
               },
             ]}
             buttonLabel="Sign in"
+            submitting={isLoading}
             onSubmit={handleSubmit}
-            saving={isLoading}
           />
         </Box>
         <Footer />

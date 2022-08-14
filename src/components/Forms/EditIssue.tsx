@@ -14,7 +14,7 @@ interface PropsI extends FromPropsI {
   usersGroupedByDepartment: GroupedUsersByDepartment;
 }
 
-const EditIssue = ({ issue, usersGroupedByDepartment, statusList, saving, handleCancel, handleSubmit }: PropsI) => {
+const EditIssue = ({ issue, usersGroupedByDepartment, statusList, submitting, onCancel, onSubmit }: PropsI) => {
   return (
     <IssueTrackerForm
       items={[
@@ -61,9 +61,9 @@ const EditIssue = ({ issue, usersGroupedByDepartment, statusList, saving, handle
         },
       ]}
       buttonLabel="Save"
-      onCancel={handleCancel}
-      onSubmit={handleSubmit}
-      saving={saving}
+      onCancel={onCancel}
+      onSubmit={onSubmit}
+      submitting={submitting}
       disabled={usersGroupedByDepartment.length === 0}
     />
   );

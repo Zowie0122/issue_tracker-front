@@ -21,7 +21,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker as MuiDateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 import { SxProps } from '@mui/system';
-import { FormOption, FormOptions, FromOptionsGroup, FromOptionsGroups, OnCancelHandler } from '../../types';
+import { FromPropsI, FormOption, FormOptions, FromOptionsGroup, FromOptionsGroups, OnCancelHandler } from '../../types';
 import { getIsoDate } from '../../utils/time';
 
 type Item = {
@@ -40,14 +40,10 @@ type Item = {
   disablePast?: boolean;
 };
 
-interface PropsI {
+interface PropsI extends FromPropsI {
   sx?: SxProps;
   items: Item[];
   buttonLabel?: string;
-  onCancel?: OnCancelHandler;
-  onSubmit: SubmitHandler<{ [key: string]: any }>;
-  saving: boolean;
-  disabled?: boolean;
 }
 
 const IssueTrackerForm = ({
@@ -56,7 +52,7 @@ const IssueTrackerForm = ({
   buttonLabel = 'Submit',
   onCancel,
   onSubmit,
-  saving = false,
+  submitting = false,
   disabled = false,
 }: PropsI) => {
   const {
@@ -272,7 +268,7 @@ const IssueTrackerForm = ({
           type="submit"
           variant="contained"
           color="primary"
-          loading={saving}
+          loading={submitting}
           disabled={disabled || Object.keys(errors).length > 0}
         >
           {buttonLabel}

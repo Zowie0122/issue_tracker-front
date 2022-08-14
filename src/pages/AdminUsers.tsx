@@ -174,9 +174,9 @@ const AdminUsers = () => {
           <NewUser
             rolesList={rolesList}
             departmentsList={departmentsList}
-            saving={savingNewUser}
-            handleCancel={onCloseNewUser}
-            handleSubmit={handleNewUserSubmit}
+            submitting={savingNewUser}
+            onCancel={onCloseNewUser}
+            onSubmit={handleNewUserSubmit}
           />
         }
         errors={addNewUserErr && [addNewUserErr]}
@@ -191,9 +191,9 @@ const AdminUsers = () => {
             rolesList={rolesList}
             departmentsList={departmentsList}
             statusList={statusList}
-            saving={updatingUser}
-            handleCancel={onCloseEditUser}
-            handleSubmit={handleUpdateUserSubmit}
+            submitting={updatingUser}
+            onCancel={onCloseEditUser}
+            onSubmit={handleUpdateUserSubmit}
           />
         }
         errors={updateUserErr && [updateUserErr]}

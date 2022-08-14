@@ -63,9 +63,9 @@ const AdminDepartments = () => {
         title="New Department"
         content={
           <NewDepartment
-            saving={savingNewDepartment}
-            handleCancel={onCloseNewDepartment}
-            handleSubmit={handleNewDepartmentSubmit}
+            submitting={savingNewDepartment}
+            onCancel={onCloseNewDepartment}
+            onSubmit={handleNewDepartmentSubmit}
           />
         }
         errors={addNewDepartmentErr && [addNewDepartmentErr]}

@@ -103,11 +103,7 @@ function IssueDetail() {
         onClose={onCloseNewComment}
         title="New Comment"
         content={
-          <NewComment
-            saving={savingNewComment}
-            handleCancel={onCloseNewComment}
-            handleSubmit={handleNewCommentSubmit}
-          />
+          <NewComment submitting={savingNewComment} onCancel={onCloseNewComment} onSubmit={handleNewCommentSubmit} />
         }
         errors={
           (errorDepartments || errorUsers || addNewCommentErr) && [errorDepartments, errorUsers, addNewCommentErr]
@@ -129,9 +125,9 @@ function IssueDetail() {
               }}
               usersGroupedByDepartment={usersGroupedByDepartment}
               statusList={Object.values(ISSUE_STATUS)}
-              saving={updatingIssue}
-              handleCancel={onCloseUpdateIssue}
-              handleSubmit={handleEditIssueSubmit}
+              submitting={updatingIssue}
+              onCancel={onCloseUpdateIssue}
+              onSubmit={handleEditIssueSubmit}
             />
           }
           errors={(errorDepartments || errorUsers || updateIssueErr) && [errorDepartments, errorUsers, updateIssueErr]}

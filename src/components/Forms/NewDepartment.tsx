@@ -2,7 +2,7 @@ import IssueTrackerForm from './Base';
 import { getValidations } from '../../utils/validation';
 import { FromPropsI } from '../../types';
 
-const NewDepartment = ({ saving, handleCancel, handleSubmit }: FromPropsI) => {
+const NewDepartment = ({ onCancel, onSubmit, submitting }: FromPropsI) => {
   return (
     <IssueTrackerForm
       items={[
@@ -14,9 +14,9 @@ const NewDepartment = ({ saving, handleCancel, handleSubmit }: FromPropsI) => {
         },
       ]}
       buttonLabel="Add"
-      onCancel={handleCancel}
-      onSubmit={handleSubmit}
-      saving={saving}
+      onCancel={onCancel}
+      onSubmit={onSubmit}
+      submitting={submitting}
     />
   );
 };

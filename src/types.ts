@@ -63,7 +63,7 @@ export type IssueListRow =
     }
   | undefined;
 
-export type KeyValuePairObj = { [key: string]: any };
+export type KeyValuePairObj = Record<string, any>;
 
 export const isKeyValuePairObj = (arg: any): arg is KeyValuePairObj => {
   return true;
@@ -90,9 +90,9 @@ export type OnCancelHandler = (data: any) => void;
 
 export type FromPropsI = {
   sx?: SxProps;
-  handleCancel?: OnCancelHandler;
-  handleSubmit: SubmitHandler<KeyValuePairObj>;
-  saving: boolean;
+  onCancel?: OnCancelHandler;
+  onSubmit: SubmitHandler<KeyValuePairObj>;
+  submitting: boolean;
   disabled?: boolean;
 };
 

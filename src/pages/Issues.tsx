@@ -148,9 +148,9 @@ const Issues = ({ tag = 'all' }: PropsI) => {
         content={
           <NewIssue
             usersGroupedByDepartment={usersGroupedByDepartment}
-            saving={savingNewIssue}
-            handleCancel={onCloseNewIssue}
-            handleSubmit={handleSubmit}
+            onCancel={onCloseNewIssue}
+            onSubmit={handleSubmit}
+            submitting={savingNewIssue}
           />
         }
         errors={(addIssueErr || errorUsers || errorDepartment) && [addIssueErr, errorUsers, errorDepartment]}

@@ -7,7 +7,7 @@ interface PropsI extends FromPropsI {
   departmentsList: FormOptions;
 }
 
-const NewUser = ({ rolesList, departmentsList, saving, handleCancel, handleSubmit }: PropsI) => {
+const NewUser = ({ rolesList, departmentsList, onCancel, onSubmit, submitting }: PropsI) => {
   return (
     <IssueTrackerForm
       items={[
@@ -51,9 +51,9 @@ const NewUser = ({ rolesList, departmentsList, saving, handleCancel, handleSubmi
         },
       ]}
       buttonLabel="Add"
-      onCancel={handleCancel}
-      onSubmit={handleSubmit}
-      saving={saving}
+      onCancel={onCancel}
+      onSubmit={onSubmit}
+      submitting={submitting}
     />
   );
 };

@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="#">
+      <Link color="inherit" target="_blank" href="https://github.com/Zowie0122">
         Zowie Min
       </Link>{' '}
       {currentYear}

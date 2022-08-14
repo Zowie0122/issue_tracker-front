@@ -81,9 +81,9 @@ const Topbar = () => {
         content={
           <UserSettings
             user={currentUser && { firstName: currentUser.first_name, lastName: currentUser.last_name }}
-            saving={updatingSettings}
-            handleCancel={onCloseEditSettings}
-            handleSubmit={handleUpdateUserSettings}
+            onCancel={onCloseEditSettings}
+            onSubmit={handleUpdateUserSettings}
+            submitting={updatingSettings}
           />
         }
         errors={updateUserSettingsErr && [updateUserSettingsErr]}

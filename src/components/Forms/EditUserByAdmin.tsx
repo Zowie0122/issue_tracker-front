@@ -14,15 +14,7 @@ interface PropsI extends FromPropsI {
   departmentsList: FormOptions;
 }
 
-const EditUserByAdmin = ({
-  user,
-  rolesList,
-  departmentsList,
-  statusList,
-  saving,
-  handleCancel,
-  handleSubmit,
-}: PropsI) => {
+const EditUserByAdmin = ({ user, rolesList, departmentsList, statusList, onCancel, onSubmit, submitting }: PropsI) => {
   return (
     <IssueTrackerForm
       items={[
@@ -62,9 +54,9 @@ const EditUserByAdmin = ({
         },
       ]}
       buttonLabel="Save"
-      onCancel={handleCancel}
-      onSubmit={handleSubmit}
-      saving={saving}
+      onCancel={onCancel}
+      onSubmit={onSubmit}
+      submitting={submitting}
       disabled={departmentsList.length === 0}
     />
   );

@@ -21,7 +21,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker as MuiDateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 import { SxProps } from '@mui/system';
-import { FromPropsI, FormOption, FormOptions, FromOptionsGroup, FromOptionsGroups, OnCancelHandler } from '../../types';
+import {
+  FromPropsI,
+  FormOptionT,
+  FormOptionsT,
+  FromOptionsGroupT,
+  FromOptionsGroupsT,
+  OnCancelHandlerT,
+} from '../../types';
 import { getIsoDate } from '../../utils/time';
 
 type Item = {
@@ -31,8 +38,8 @@ type Item = {
   defaultValue?: any;
   disabled?: boolean;
   rules?: {};
-  options?: FormOptions;
-  groups?: FromOptionsGroups;
+  options?: FormOptionsT;
+  groups?: FromOptionsGroupsT;
   minRows?: number;
   maxRows?: number;
   minDateTime?: Date;
@@ -152,7 +159,7 @@ const IssueTrackerForm = ({
                       disabled={item.disabled}
                       defaultValue={item.defaultValue}
                     >
-                      {item?.options?.map((option: FormOption, i: number) => (
+                      {item?.options?.map((option: FormOptionT, i: number) => (
                         <MenuItem key={i} value={option.value}>
                           {option.label}
                         </MenuItem>
@@ -192,9 +199,9 @@ const IssueTrackerForm = ({
                     >
                       <>
                         <option aria-label="None" key="none" label="Select One" value="" />
-                        {item?.groups?.map((group: FromOptionsGroup, i: number) => (
+                        {item?.groups?.map((group: FromOptionsGroupT, i: number) => (
                           <optgroup label={group.label} key={`g${i}`}>
-                            {group.options.map((option: FormOption, i: number) => (
+                            {group.options.map((option: FormOptionT, i: number) => (
                               <option value={option.value} key={`o${i}`}>
                                 {option.label}
                               </option>

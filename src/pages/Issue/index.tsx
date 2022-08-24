@@ -1,31 +1,30 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 
-import { useGetIssuesQuery, useAddIssueMutation } from '../services/issuesApi';
-import { useGetSelfQuery, useGetUsersQuery } from '../services/usersApi';
-import { useGetDepartmentsQuery } from '../services/departmentsApi';
+import { useGetIssuesQuery, useAddIssueMutation } from '../../services/issuesApi';
+import { useGetSelfQuery, useGetUsersQuery } from '../../services/usersApi';
+import { useGetDepartmentsQuery } from '../../services/departmentsApi';
 
-import Spinner from '../components/Spinner';
-import ErrorAlert from '../components/ErrorAlert';
-import ActionTable, { Column } from '../components/Tables/ActionTable';
-import DialogPopup from '../components/Dialog';
-import NewIssue from '../components/Forms/NewIssue';
+import Spinner from '../../components/Spinner';
+import ErrorAlert from '../../components/ErrorAlert';
+import ActionTable, { Column } from '../../components/Tables/ActionTable';
+import DialogPopup from '../../components/Dialog';
+import NewIssueForm from './NewIssueForm';
 
-import { Issue, IssueListRow, KeyValuePairObj } from '../types';
-import { getLocalTimeString } from '../utils/time';
-import { groupUsersByDepartment } from '../utils/users';
-import { ISSUE_LABLE } from '../utils/constants';
-import { toShortStr } from '../utils/format';
-
-import { GroupedUsersByDepartment } from '../types';
+import { IssueT, IssueListRowT, KeyValuePairObj } from '../../types';
+import { getLocalTimeString } from '../../utils/time';
+import { groupUsersByDepartment } from '../../utils/users';
+import { ISSUE_LABLE } from '../../utils/constants';
+import { toShortStr } from '../../utils/format';
+import { GroupedUsersByDepartment } from '../../types';
 
 type PropsI = {
   tag?: 'received' | 'issued' | 'all';
 };
 
-const Issues = ({ tag = 'all' }: PropsI) => {
+const List = ({ tag = 'all' }: PropsI) => {
   const navigate = useNavigate();
 
   const { data: currentUser } = useGetSelfQuery({});
@@ -104,12 +103,11 @@ const Issues = ({ tag = 'all' }: PropsI) => {
     },
   ].filter((column) => column.id !== tag);
 
-  // TODO: could use transform or here? but there is a callback
   useMemo(() => {
     if (!loadingIssues && !fetchingIssues && issues && issues.length > 0) {
       console.log(issues);
       const _rows = issues
-        .map((issue: Issue) => ({
+        .map((issue: IssueT) => ({
           id: issue.id,
           issuerId: issue.issuerId,
           title: issue.title,
@@ -121,7 +119,7 @@ const Issues = ({ tag = 'all' }: PropsI) => {
             isAction: true,
             icon: 'detail',
             iconSize: 'small',
-            callback: (row: IssueListRow) => {
+            callback: (row: IssueListRowT) => {
               navigate(`/issues/${row && row.id}`);
             },
           },
@@ -146,7 +144,7 @@ const Issues = ({ tag = 'all' }: PropsI) => {
         onClose={onCloseNewIssue}
         title="New Issue"
         content={
-          <NewIssue
+          <NewIssueForm
             usersGroupedByDepartment={usersGroupedByDepartment}
             onCancel={onCloseNewIssue}
             onSubmit={handleSubmit}
@@ -159,4 +157,4 @@ const Issues = ({ tag = 'all' }: PropsI) => {
   );
 };
 
-export default Issues;
+export default List;

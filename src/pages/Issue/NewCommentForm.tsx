@@ -1,16 +1,18 @@
-import IssueTrackerForm from './Base';
+import IssueTrackerForm from '../../components/Forms/Base';
 import { getValidations } from '../../utils/validation';
 import { FromPropsI } from '../../types';
 
-const NewDepartment = ({ onCancel, onSubmit, submitting }: FromPropsI) => {
+const NewComment = ({ onCancel, onSubmit, submitting }: FromPropsI) => {
   return (
     <IssueTrackerForm
       items={[
         {
           type: 'text',
-          label: 'Name',
-          name: 'name',
+          label: 'Contents',
+          name: 'contents',
           rules: getValidations(['required']),
+          minRows: 2,
+          maxRows: 5,
         },
       ]}
       buttonLabel="Add"
@@ -21,4 +23,4 @@ const NewDepartment = ({ onCancel, onSubmit, submitting }: FromPropsI) => {
   );
 };
 
-export default NewDepartment;
+export default NewComment;

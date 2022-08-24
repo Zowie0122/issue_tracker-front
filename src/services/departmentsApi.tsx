@@ -1,10 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Department } from '../types';
 
 export const departmentsApi = createApi({
   reducerPath: 'departments',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080',
+    baseUrl: 'http://localhost:5000',
 
     prepareHeaders(headers) {
       return headers;
@@ -17,7 +16,7 @@ export const departmentsApi = createApi({
   endpoints: (builder) => ({
     // get all department
     getDepartments: builder.query({
-      query: ({}) => '/departments',
+      query: () => '/departments',
       providesTags: ['Departments'],
     }),
 

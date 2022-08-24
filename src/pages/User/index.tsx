@@ -2,35 +2,36 @@ import { useState, useMemo, useEffect } from 'react';
 
 import { Button } from '@mui/material';
 
-import { useGetSelfQuery, useGetUsersQuery, useAddUserMutation, useUpdateUserMutation } from '../services/usersApi';
-import { useGetDepartmentsQuery } from '../services/departmentsApi';
+import { useGetSelfQuery, useGetUsersQuery, useAddUserMutation, useUpdateUserMutation } from '../../services/usersApi';
+import { useGetDepartmentsQuery } from '../../services/departmentsApi';
 
-import Spinner from '../components/Spinner';
-import ErrorAlert from '../components/ErrorAlert';
-import ActionTable, { Column } from '../components/Tables/ActionTable';
-import DialogPopup from '../components/Dialog';
-import NewUser from '../components/Forms/NewUser';
-import EditUserByAdmin from '../components/Forms/EditUserByAdmin';
+import Spinner from '../../components/Spinner';
+import ErrorAlert from '../../components/ErrorAlert';
+import ActionTable, { Column } from '../../components/Tables/ActionTable';
+import DialogPopup from '../../components/Dialog';
+import NewUserForm from './NewUserForm';
+import EditUserForm from './EditUserForm';
 
-import { User, Department, FormOptions, KeyValuePairObj } from '../types';
-import { getLocalTimeString } from '../utils/time';
-import { PERMISSIONS, USER_STATUS, ROLE_LABLE, USER_STATUS_LABLE } from '../utils/constants';
-import { toShortStr } from '../utils/format';
+import { UserT, DepartmentT, FormOptionsT, KeyValuePairObj } from '../../types';
+import { getLocalTimeString } from '../../utils/time';
+import { PERMISSIONS, USER_STATUS, ROLE_LABLE, USER_STATUS_LABLE } from '../../utils/constants';
+import { toShortStr } from '../../utils/format';
 
 const rolesList = Object.values(PERMISSIONS);
 const statusList = Object.values(USER_STATUS);
 
-const AdminUsers = () => {
+const List = () => {
   // we have admin route guard, so this sopposed to be save
   const { data: currentUser } = useGetSelfQuery({});
 
   const { data: users, isLoading: loadingUsers, error: errorUsers, isFetching: fetchingUsers } = useGetUsersQuery({});
   const { data: departments, isLoading: loadingDepartments, error: errorDepartments } = useGetDepartmentsQuery({});
-  const [departmentsList, setDepartmentsList] = useState<FormOptions>([]);
+  const [departmentsList, setDepartmentsList] = useState<FormOptionsT>([]);
 
-  const [showNewUser, setShowNewUser] = useState<boolean>(false);
-  const [addUser, { isLoading: savingNewUser, isSuccess: successNewUser, error: errorNewUser }] = useAddUserMutation();
-  const [addNewUserErr, setAddNewUserErr] = useState<typeof errorNewUser>(undefined);
+  const [showNewUserForm, setShowNewUserForm] = useState<boolean>(false);
+  const [addUser, { isLoading: savingNewUserForm, isSuccess: successNewUserForm, error: errorNewUserForm }] =
+    useAddUserMutation();
+  const [addNewUserFormErr, setAddNewUserFormErr] = useState<typeof errorNewUserForm>(undefined);
 
   const [showEditUser, setShowEditUser] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<string | undefined>(undefined);
@@ -45,28 +46,28 @@ const AdminUsers = () => {
   useMemo(() => {
     if (!loadingDepartments && departments) {
       setDepartmentsList(
-        departments.map((department: Department) => department && { label: department.name, value: department.id })
+        departments.map((department: DepartmentT) => department && { label: department.name, value: department.id })
       );
     }
   }, [loadingDepartments]);
 
-  const handleNewUserSubmit = async (data: KeyValuePairObj) => {
+  const handleNewUserFormSubmit = async (data: KeyValuePairObj) => {
     await addUser(data);
   };
 
-  const onCloseNewUser = () => {
-    setShowNewUser(false);
-    setAddNewUserErr(undefined);
+  const onCloseNewUserForm = () => {
+    setShowNewUserForm(false);
+    setAddNewUserFormErr(undefined);
   };
 
   useMemo(() => {
-    if (!savingNewUser && successNewUser) setShowNewUser(false);
-  }, [savingNewUser]);
+    if (!savingNewUserForm && successNewUserForm) setShowNewUserForm(false);
+  }, [savingNewUserForm]);
 
   // since redux toolkit RTK doesn't support reset cache yet, use local state to track and reset the error
   useEffect(() => {
-    setAddNewUserErr(errorNewUser);
-  }, [errorNewUser]);
+    setAddNewUserFormErr(errorNewUserForm);
+  }, [errorNewUserForm]);
 
   // update a user
   const handleUpdateUserSubmit = async (data: KeyValuePairObj) => {
@@ -132,14 +133,15 @@ const AdminUsers = () => {
     ) {
       setRows(
         users
-          .map((user: User) => ({
+          .map((user: UserT) => ({
             id: user.id,
             firstName: user.first_name,
             lastName: user.last_name,
             email: user.email,
             role: user.role_id,
-            department: departments.find((department: Department) => department && department.id === user.department_id)
-              .name,
+            department: departments.find(
+              (department: DepartmentT) => department && department.id === user.department_id
+            ).name,
             status: user.status,
             createdAt: user.created_at,
             edit: {
@@ -157,36 +159,38 @@ const AdminUsers = () => {
     }
   }, [loadingUsers, loadingDepartments, fetchingUsers]);
 
+  console.log(rows);
+
   if (loadingUsers || loadingDepartments) return <Spinner />;
   else if (errorUsers || errorDepartments) return <ErrorAlert errors={[errorUsers, errorDepartments]} />;
 
   return (
     <>
-      <Button sx={{ m: 2 }} variant="contained" onClick={() => setShowNewUser(true)}>
+      <Button className="test" sx={{ m: 2 }} variant="contained" onClick={() => setShowNewUserForm(true)}>
         New
       </Button>
       <ActionTable columns={columns} rows={rows} loading={loadingUsers || loadingDepartments} />
       <DialogPopup
-        open={showNewUser}
-        onClose={onCloseNewUser}
+        open={showNewUserForm}
+        onClose={onCloseNewUserForm}
         title="New User"
         content={
-          <NewUser
+          <NewUserForm
             rolesList={rolesList}
             departmentsList={departmentsList}
-            submitting={savingNewUser}
-            onCancel={onCloseNewUser}
-            onSubmit={handleNewUserSubmit}
+            submitting={savingNewUserForm}
+            onCancel={onCloseNewUserForm}
+            onSubmit={handleNewUserFormSubmit}
           />
         }
-        errors={addNewUserErr && [addNewUserErr]}
+        errors={addNewUserFormErr && [addNewUserFormErr]}
       />
       <DialogPopup
         open={showEditUser}
         onClose={onCloseEditUser}
         title="Update User"
         content={
-          <EditUserByAdmin
+          <EditUserForm
             user={users && users.find((user: any) => user.id === selectedUser)}
             rolesList={rolesList}
             departmentsList={departmentsList}
@@ -202,4 +206,4 @@ const AdminUsers = () => {
   );
 };
 
-export default AdminUsers;
+export default List;

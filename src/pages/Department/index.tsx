@@ -2,17 +2,17 @@ import { useState, useMemo, useEffect } from 'react';
 
 import { Button } from '@mui/material';
 
-import { useGetDepartmentsQuery, useAddDepartmentMutation } from '../services/departmentsApi';
+import { useGetDepartmentsQuery, useAddDepartmentMutation } from '../../services/departmentsApi';
 
-import Spinner from '../components/Spinner';
-import ErrorAlert from '../components/ErrorAlert';
-import ActionTable, { Column } from '../components/Tables/ActionTable';
-import DialogPopup from '../components/Dialog';
-import NewDepartment from '../components/Forms/NewDepartment';
+import Spinner from '../../components/Spinner';
+import ErrorAlert from '../../components/ErrorAlert';
+import ActionTable, { Column } from '../../components/Tables/ActionTable';
+import DialogPopup from '../../components/Dialog';
+import NewDepartmentForm from './NewDepartmentForm';
 
-import { KeyValuePairObj } from '../types';
+import { KeyValuePairObj } from '../../types';
 
-const AdminDepartments = () => {
+const List = () => {
   const { data: departments, isLoading: loadingDepartments, error: errorDepartments } = useGetDepartmentsQuery({});
 
   const [
@@ -62,7 +62,7 @@ const AdminDepartments = () => {
         onClose={onCloseNewDepartment}
         title="New Department"
         content={
-          <NewDepartment
+          <NewDepartmentForm
             submitting={savingNewDepartment}
             onCancel={onCloseNewDepartment}
             onSubmit={handleNewDepartmentSubmit}
@@ -74,4 +74,4 @@ const AdminDepartments = () => {
   );
 };
 
-export default AdminDepartments;
+export default List;

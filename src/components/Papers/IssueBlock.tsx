@@ -4,10 +4,10 @@ import IconText from '../IconText';
 import AvatarName from '../AvatarName';
 import { formatTimeSince, getLocalTimeString } from '../../utils/time';
 import { ISSUE_LABLE } from '../../utils/constants';
-import { Issue } from '../../types';
+import { IssueT } from '../../types';
 
 interface PropI {
-  issue: Issue;
+  issue: IssueT;
 }
 
 const IssueBlock = ({ issue }: PropI) => {

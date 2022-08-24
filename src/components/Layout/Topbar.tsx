@@ -5,10 +5,10 @@ import { Toolbar, AppBar, IconButton } from '@mui/material';
 import { AccountCircle, Logout } from '@mui/icons-material';
 
 import { useGetSelfQuery, usersApi, useUpdateSelfMutation } from '../../services/usersApi';
-import { authApi, useRemoveAuthMutation } from '../../services/authApi';
+import { useRemoveAuthMutation } from '../../services/authApi';
 
 import Dialog from '../Dialog';
-import UserSettings from '../Forms/UserSettings';
+import UserSettingsForm from '../../pages/User/UserSettingsForm';
 
 import { KeyValuePairObj } from '../../types';
 
@@ -79,7 +79,7 @@ const Topbar = () => {
         onClose={onCloseEditSettings}
         title="Settings"
         content={
-          <UserSettings
+          <UserSettingsForm
             user={currentUser && { firstName: currentUser.first_name, lastName: currentUser.last_name }}
             onCancel={onCloseEditSettings}
             onSubmit={handleUpdateUserSettings}

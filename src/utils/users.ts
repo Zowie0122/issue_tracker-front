@@ -1,8 +1,8 @@
-import { User, Department } from '../types';
+import { UserT, DepartmentT } from '../types';
 
 export const groupUsersByDepartment = (
-  users: User[],
-  departments: Department[],
+  users: UserT[],
+  departments: DepartmentT[],
   userToBeRemoved: string | undefined
 ) => {
   if (Array.isArray(users) && Array.isArray(departments))

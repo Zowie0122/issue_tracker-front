@@ -1,4 +1,4 @@
-import IssueTrackerForm from './Base';
+import IssueTrackerForm from '../../components/Forms/Base';
 import { getValidations } from '../../utils/validation';
 import { FromPropsI, GroupedUsersByDepartment } from '../../types';
 

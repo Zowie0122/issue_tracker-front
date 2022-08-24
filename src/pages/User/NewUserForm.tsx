@@ -1,10 +1,10 @@
-import IssueTrackerForm from './Base';
+import IssueTrackerForm from '../../components/Forms/Base';
 import { getValidations } from '../../utils/validation';
-import { FromPropsI, FormOptions } from '../../types';
+import { FromPropsI, FormOptionsT } from '../../types';
 
 interface PropsI extends FromPropsI {
-  rolesList: FormOptions;
-  departmentsList: FormOptions;
+  rolesList: FormOptionsT;
+  departmentsList: FormOptionsT;
 }
 
 const NewUser = ({ rolesList, departmentsList, onCancel, onSubmit, submitting }: PropsI) => {

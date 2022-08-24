@@ -5,7 +5,7 @@ import { KeyValuePairObj } from '../types';
 export const issuesApi = createApi({
   reducerPath: 'issues',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080',
+    baseUrl: 'http://localhost:5000',
 
     // with credentials (session ID cookie)
     prepareHeaders(headers) {

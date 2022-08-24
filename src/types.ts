@@ -2,7 +2,7 @@ import { SxProps } from '@mui/system';
 import { groupUsersByDepartment } from './utils/users';
 import { SubmitHandler } from 'react-hook-form';
 
-export type User = {
+export type UserT = {
   id?: string; // uuid
   first_name?: string;
   last_name?: string;
@@ -14,13 +14,13 @@ export type User = {
   status?: 0 | 1;
 };
 
-export type Department = {
+export type DepartmentT = {
   id: number;
   company_id?: number;
   name: string;
 };
 
-export type Issue = {
+export type IssueT = {
   id?: number;
   companyId?: number;
   issuerId?: string;
@@ -38,7 +38,7 @@ export type Issue = {
   comments?: Comment[];
 };
 
-export type Comment = {
+export type CommentT = {
   id: number;
   contents: string;
   issuerName: string;
@@ -46,7 +46,7 @@ export type Comment = {
   createdAt: Date;
 };
 
-export type IssueListRow =
+export type IssueListRowT =
   | {
       id?: number;
       title?: string;
@@ -70,28 +70,28 @@ export const isKeyValuePairObj = (arg: any): arg is KeyValuePairObj => {
 };
 
 // form types
-export type FormOption = {
+export type FormOptionT = {
   label: string;
   value: any;
 };
 
-export type FormOptions = FormOption[] | [];
+export type FormOptionsT = FormOptionT[] | [];
 
-export type FromOptionsGroup = {
+export type FromOptionsGroupT = {
   label: string;
-  options: FormOptions;
+  options: FormOptionsT;
 };
 
-export type FromOptionsGroups = FromOptionsGroup[];
+export type FromOptionsGroupsT = FromOptionsGroupT[];
 
-export type OnSubmitHandler = SubmitHandler<{ [key: string]: any }>;
+export type OnSubmitHandlerT = SubmitHandler<{ [key: string]: any }>;
 
-export type OnCancelHandler = (data: any) => void;
+export type OnCancelHandlerT = (data: any) => void;
 
 export type FromPropsI = {
   sx?: SxProps;
-  onCancel?: OnCancelHandler;
-  onSubmit: SubmitHandler<KeyValuePairObj>;
+  onCancel?: OnCancelHandlerT;
+  onSubmit: SubmitHandler<any>;
   submitting: boolean;
   disabled?: boolean;
 };

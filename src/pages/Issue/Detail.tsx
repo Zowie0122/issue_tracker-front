@@ -3,23 +3,23 @@ import { useParams } from 'react-router-dom';
 
 import { Button } from '@mui/material';
 
-import { useGetIssueByIdQuery, useAddCommentMutation, useUpdateIssueMutation } from '../services/issuesApi';
-import { useGetSelfQuery, useGetUsersQuery } from '../services/usersApi';
-import { useGetDepartmentsQuery } from '../services/departmentsApi';
+import { useGetIssueByIdQuery, useAddCommentMutation, useUpdateIssueMutation } from '../../services/issuesApi';
+import { useGetSelfQuery, useGetUsersQuery } from '../../services/usersApi';
+import { useGetDepartmentsQuery } from '../../services/departmentsApi';
 
-import Spinner from '../components/Spinner';
-import ErrorAlert from '../components/ErrorAlert';
-import IssueBlock from '../components/Papers/IssueBlock';
-import CommentBlock from '../components/Papers/CommentBlock';
-import Dialog from '../components/Dialog';
-import NewComment from '../components/Forms/NewComment';
-import EditIssue from '../components/Forms/EditIssue';
+import Spinner from '../../components/Spinner';
+import ErrorAlert from '../../components/ErrorAlert';
+import IssueBlock from '../../components/Papers/IssueBlock';
+import CommentBlock from '../../components/Papers/CommentBlock';
+import Dialog from '../../components/Dialog';
+import NewCommentForm from './NewCommentForm';
+import EditIssueForm from './EditIssueForm';
 
-import { groupUsersByDepartment } from '../utils/users';
-import { ISSUE_STATUS } from '../utils/constants';
-import { Comment, KeyValuePairObj, GroupedUsersByDepartment } from '../types';
+import { groupUsersByDepartment } from '../../utils/users';
+import { ISSUE_STATUS } from '../../utils/constants';
+import { CommentT, KeyValuePairObj, GroupedUsersByDepartment } from '../../types';
 
-function IssueDetail() {
+function Detail() {
   const { id } = useParams();
   const { data: currentUser } = useGetSelfQuery({});
 
@@ -97,14 +97,18 @@ function IssueDetail() {
       )}
       <IssueBlock issue={issue ? issue : {}} />
       <Button onClick={() => setShowNewComment(true)}>Add Comment</Button>
-      {issue && issue.comments.map((comment: Comment, i: number) => <CommentBlock key={i} comment={comment} />)}
+      {issue && issue.comments.map((comment: CommentT, i: number) => <CommentBlock key={i} comment={comment} />)}
 
       <Dialog
         open={showNewComment}
         onClose={onCloseNewComment}
         title="New Comment"
         content={
-          <NewComment submitting={savingNewComment} onCancel={onCloseNewComment} onSubmit={handleNewCommentSubmit} />
+          <NewCommentForm
+            submitting={savingNewComment}
+            onCancel={onCloseNewComment}
+            onSubmit={handleNewCommentSubmit}
+          />
         }
         errors={
           (errorDepartments || errorUsers || addNewCommentErr) && [errorDepartments, errorUsers, addNewCommentErr]
@@ -116,7 +120,7 @@ function IssueDetail() {
           onClose={onCloseUpdateIssue}
           title="Edit Issue"
           content={
-            <EditIssue
+            <EditIssueForm
               issue={{
                 title: issue.title,
                 description: issue.description,
@@ -138,4 +142,4 @@ function IssueDetail() {
   );
 }
 
-export default IssueDetail;
+export default Detail;

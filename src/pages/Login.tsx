@@ -9,21 +9,19 @@ import IssueTrackerForm from '../components/Forms/Base';
 import Footer from '../components/Layout/Footer';
 
 import { getValidations } from '../utils/validation';
-import { KeyValuePairObj } from '../types';
+import { CredentialsT } from '../services/authApi';
 
 const SignIn = () => {
   const navigate = useNavigate();
 
   const [postCredentials, { isSuccess, error, isLoading }] = useAddAuthMutation();
 
-  const handleSubmit = async (data: KeyValuePairObj) => {
+  const handleSubmit = async (data: CredentialsT) => {
     await postCredentials(data);
   };
 
   useEffect(() => {
-    if (isSuccess) {
-      navigate('/issues/received');
-    }
+    if (isSuccess) navigate('/issues/received');
   }, [isSuccess]);
 
   return (

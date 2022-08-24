@@ -1,10 +1,10 @@
-import { Paper, Grid, Avatar, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { formatTimeSince } from '../../utils/time';
 import AvatarName from '../AvatarName';
-import { Comment } from '../../types';
+import { CommentT } from '../../types';
 
 interface PropI {
-  comment: Comment;
+  comment: CommentT;
 }
 
 const CommentBlock = ({ comment }: PropI) => {

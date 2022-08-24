@@ -1,6 +1,6 @@
-import IssueTrackerForm from './Base';
+import IssueTrackerForm from '../../components/Forms/Base';
 import { getValidations } from '../../utils/validation';
-import { FromPropsI, FormOptions, GroupedUsersByDepartment } from '../../types';
+import { FromPropsI, FormOptionsT, GroupedUsersByDepartment } from '../../types';
 
 interface PropsI extends FromPropsI {
   issue: {
@@ -10,7 +10,7 @@ interface PropsI extends FromPropsI {
     dueAt: Date;
     status: 0 | 1;
   };
-  statusList: FormOptions;
+  statusList: FormOptionsT;
   usersGroupedByDepartment: GroupedUsersByDepartment;
 }
 

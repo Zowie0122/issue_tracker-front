@@ -3,10 +3,10 @@ import UserRoutes from './routes/UserRoutes';
 import AdminRoutes from './routes/AdminRoutes';
 import Login from './pages/Login';
 import Main from './layouts/main';
-import Issues from './pages/Issues';
-import IssueDetail from './pages/IssueDetail';
-import AdminUsers from './pages/AdminUsers';
-import AdminDepartments from './pages/AdminDepartments';
+import Issues from './pages/Issue';
+import IssueDetail from './pages/Issue/Detail';
+import User from './pages/User';
+import Department from './pages/Department';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -22,8 +22,8 @@ function App() {
             <Route path="all" element={<Issues tag="all" />} />
           </Route>
           <Route element={<AdminRoutes />}>
-            <Route path="/admin/users" element={<AdminUsers />} />
-            <Route path="/admin/departments" element={<AdminDepartments />} />
+            <Route path="/admin/users" element={<User />} />
+            <Route path="/admin/departments" element={<Department />} />
           </Route>
         </Route>
         {/* Unprotected routes */}

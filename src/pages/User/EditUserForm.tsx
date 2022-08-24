@@ -1,6 +1,6 @@
-import IssueTrackerForm from './Base';
+import IssueTrackerForm from '../../components/Forms/Base';
 import { getValidations } from '../../utils/validation';
-import { FromPropsI, FormOptions } from '../../types';
+import { FromPropsI, FormOptionsT } from '../../types';
 
 interface PropsI extends FromPropsI {
   user: {
@@ -9,9 +9,9 @@ interface PropsI extends FromPropsI {
     department_id: number;
     status: 0 | 1;
   };
-  statusList: FormOptions;
-  rolesList: FormOptions;
-  departmentsList: FormOptions;
+  statusList: FormOptionsT;
+  rolesList: FormOptionsT;
+  departmentsList: FormOptionsT;
 }
 
 const EditUserByAdmin = ({ user, rolesList, departmentsList, statusList, onCancel, onSubmit, submitting }: PropsI) => {

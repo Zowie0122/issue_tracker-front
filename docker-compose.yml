@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   client:
@@ -9,5 +9,8 @@ services:
         - EXPOSED_PORT=${FRONTEND_INTERNAL_HTTP_PORT}
     volumes:
       - .:/app
+      - exclude:/app/node_modules/
     ports:
-      - "${FRONTEND_EXPOSED_HTTP_PORT}:${FRONTEND_INTERNAL_HTTP_PORT}"
+      - '${FRONTEND_EXPOSED_HTTP_PORT}:${FRONTEND_INTERNAL_HTTP_PORT}'
+volumes:
+  exclude:

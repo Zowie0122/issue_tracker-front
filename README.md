@@ -1,46 +1,71 @@
-# Getting Started with Create React App
+# Issue Tracker Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An issue tracker app that employees within a company can post and receive issues from each other.
+Admin account can add department, add user and update user's settings.
+This repo is paired with [Issue Tracker API](https://github.com/Zowie0122/issue_tracker-api).
 
-## Available Scripts
+![login](./docs/login.png)
+![issue_list](./docs/issue_list.png)
+![issue_detail](./docs/issue_detail.png)
+![add_issue](./docs/add_issue.png)
+![user_list](./docs/user_list.png)
 
-In the project directory, you can run:
+## Main Features
 
-### `npm start`
+- This API contains two types of permissions, `admin` and `user` within each company.
+- User is able to read, post, update issues and post comments to issues.
+- User is able to update his/her own profile, like name and password.
+- Admin has all the features that a user has, plus extra permission to add a department, add a new user and reset user information like password, department, and permission.
+- A user or admin can only access the information that belongs to his/her company.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Main Technologies
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- TypeScript
+- React.js (Hooks)
+- React Hook Form
+- Redux (RTK query)
+- React Router V6
+- MUI
+- Docker
 
-### `npm test`
+## How to start
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. This project requires this [repo](https://github.com/Zowie0122/issue_tracker_api) which is the API, please follow the [instruction](https://github.com/Zowie0122/issue_tracker_api/blob/main/README.md) to start the backend server first.
 
-### `npm run build`
+2. Copy the environment variable to `.env` from `.env.example` by
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+cat .env.example >> .env
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Please install [Docker](https://www.docker.com/products/docker-desktop/) if you hasn't, don't worry, it is still free 😆 !
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. Make sure your Docker is up and running and host machine and docker environment are all available for port: `3000`. Then run
 
-### `npm run eject`
+```
+make restart
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+5. Go to `http://localhost:3000/login`, log in as user
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+email: tom@tomandjerry.com
+password: pAssword1@
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Or as admin
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+email: admin@tomandjerry.com
+password: pAssword1@
+```
 
-## Learn More
+6. To stop the container, run
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+make down
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+For more come in handy commands, please refer to [Makefile](./Makefile)
+
+✨✨✨✨✨✨Welcome any ideas to make this project better! Happy Coding 👩🏻‍💻✨✨✨✨✨✨

@@ -1,10 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { useState, useMemo } from 'react';
 
 import { Toolbar, AppBar, IconButton } from '@mui/material';
 import { AccountCircle, Logout } from '@mui/icons-material';
 
-import { useGetSelfQuery, usersApi, useUpdateSelfMutation } from '../../services/usersApi';
+import { useGetSelfQuery, useUpdateSelfMutation } from '../../services/usersApi';
 import { useRemoveAuthMutation } from '../../services/authApi';
 
 import Dialog from '../Dialog';
@@ -13,7 +12,6 @@ import UserSettingsForm from '../../pages/User/UserSettingsForm';
 import { KeyValuePairObj } from '../../types';
 
 const Topbar = () => {
-  const navigate = useNavigate();
   const { data: currentUser } = useGetSelfQuery({});
   const [
     updateSettings,
@@ -24,16 +22,16 @@ const Topbar = () => {
   const [showUserSettings, setShowUserSettings] = useState<boolean>(false);
   const [updateUserSettingsErr, setUpdateUserSettingsErr] = useState<typeof errorUpdateSettings>(undefined);
 
-  const handleUpdateUserSettings = async (data: KeyValuePairObj) => {
+  const handleUpdateSettings = async (data: KeyValuePairObj) => {
     await updateSettings({ id: currentUser.id, payload: data });
   };
 
-  const onCloseEditSettings = () => {
+  const handleCloseSettings = () => {
     setShowUserSettings(false);
     setUpdateUserSettingsErr(undefined);
   };
 
-  useEffect(() => {
+  useMemo(() => {
     setUpdateUserSettingsErr(errorUpdateSettings);
   }, [errorUpdateSettings]);
 
@@ -41,9 +39,9 @@ const Topbar = () => {
     if (!updatingSettings && successUpdateSettings) setShowUserSettings(false);
   }, [updatingSettings]);
 
-  useEffect(() => {
+  useMemo(() => {
     if (loggedOut) {
-      window.location.replace('/login'); // clear the state
+      window.location.replace('/login'); // refresh the page and clear the state in the same time
     }
   }, [loggedOut]);
 
@@ -76,13 +74,13 @@ const Topbar = () => {
       </AppBar>
       <Dialog
         open={showUserSettings}
-        onClose={onCloseEditSettings}
+        onClose={handleCloseSettings}
         title="Settings"
         content={
           <UserSettingsForm
             user={currentUser && { firstName: currentUser.first_name, lastName: currentUser.last_name }}
-            onCancel={onCloseEditSettings}
-            onSubmit={handleUpdateUserSettings}
+            onCancel={handleCloseSettings}
+            onSubmit={handleUpdateSettings}
             submitting={updatingSettings}
           />
         }

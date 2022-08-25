@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import {
   Box,
@@ -21,15 +21,85 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker as MuiDateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 import { SxProps } from '@mui/system';
-import {
-  FromPropsI,
-  FormOptionT,
-  FormOptionsT,
-  FromOptionsGroupT,
-  FromOptionsGroupsT,
-  OnCancelHandlerT,
-} from '../../types';
+import { FromPropsI, FormOptionT, FormOptionsT, FromOptionsGroupT, FromOptionsGroupsT } from '../../types';
 import { getIsoDate } from '../../utils/time';
+
+/**
+ * create the form for the app by the items name and validation rules
+ * 
+ * ## Features
+ * - Takes text, email, password, selection, grouped selection, date
+ * - Takes button label to display button
+ * - Disable field or button
+ * - Validation for the field
+ * 
+ * ## example usage 
+ ```jsx
+  const contentToSave = [
+    {
+      type: 'email',
+      label: 'Email',
+      name: 'email',
+      defaultValue: "email@invalid.com",
+      disabled: true,
+    },
+    {
+      type: 'selection',
+      label: 'Some Selection',
+      name: 'selection',
+      options: [{
+        label: 'A',
+        value: 0
+      },
+      {
+        label: 'B',
+        value: 1
+      },
+      {
+        label: 'C',
+        value: 2
+      }
+    ],
+      defaultValue: 0,
+    },
+    {
+      type: 'dateTimePicker',
+      label: 'Deadline',
+      name: 'dueAt',
+      defaultValue: issue.dueAt,
+      disablePast: true,
+      rules: getValidations(['required']),
+    }
+  ]
+
+  const buttonLabel="Save"
+  const handleCancel=() => { console.log('Canceled') }
+  const handleSubmit=() => { console.log('Submitted') }
+  submitting=false
+
+  <IssueTrackerForm
+    items = { contentToSave }
+    label = buttonLabel
+    onCancel= { handleCancel}
+    onSubmit = { handleSubmit }
+    submitting = { submitting }
+  />
+ ```
+ * @param {object} props
+ * @param {'text' | 'email' | 'password' | 'selection' | 'groupedSelection' | 'dateTimePicker'} [props.type] the field type
+ * @param {string} [props.type] the button label
+ * @param {string} [props.name] the field label when submitting
+ * @param {any} [props.defaultValue] the field default value
+ * @param {boolean} [props.disabled] whether the field is disabled
+ * @param {Array} [props.rules] the field's validation rules with message
+ * @param {Array} [props.options] if the field is a selection type, the options for the selection
+ * @param {groups} [props.groups] if the field is a grouped selection type, the group and each group's options for the selection
+ * @param {number} [props.minRows] if the field is text type, the min rows for the text area
+ * @param {number} [props.maxRows] if the field is text type, the max rows for the text area
+ * @param {Date} [props.minDateTime] if the field is date type, the min date limitation for the date value
+ * @param {Date} [props.maxRows] if the field is date type, the max date limitation for the date value
+ * @param {disablePast} [props.disablePast] if the field is date type, whether to disabled a passed date and time
+ */
 
 type Item = {
   type: 'text' | 'email' | 'password' | 'selection' | 'groupedSelection' | 'dateTimePicker';

@@ -4,7 +4,6 @@ import { Drawer, Toolbar } from '@mui/material';
 import IconList from '../Lists/IconList';
 
 import { useGetSelfQuery } from '../../services/usersApi';
-
 import { PERMISSIONS } from '../../utils/constants';
 
 const drawerWidth = 240;

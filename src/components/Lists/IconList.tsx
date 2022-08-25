@@ -1,7 +1,7 @@
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 import { GetApp, Send, AllInbox, Group, Business, Settings } from '@mui/icons-material';
-import { SxProps } from '@mui/system';
+import { GenericPropI } from '../../types';
 
 const icons: {
   [key: string]: JSX.Element;
@@ -14,8 +14,7 @@ const icons: {
   setting: <Settings />,
 };
 
-export interface IconListProps {
-  sx: SxProps;
+export interface IconListProps extends GenericPropI {
   items: {
     title: string;
     icon: string;

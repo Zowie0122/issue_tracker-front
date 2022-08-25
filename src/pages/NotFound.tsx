@@ -1,5 +1,11 @@
+import { Box } from '@mui/material';
+
 function NotFound() {
-  return <div>404</div>;
+  return (
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '5rem', height: '100%' }}>
+      404
+    </Box>
+  );
 }
 
 export default NotFound;

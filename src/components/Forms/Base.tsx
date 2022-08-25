@@ -20,7 +20,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker as MuiDateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-import { SxProps } from '@mui/system';
 import { FromPropsI, FormOptionT, FormOptionsT, FromOptionsGroupT, FromOptionsGroupsT } from '../../types';
 import { getIsoDate } from '../../utils/time';
 
@@ -118,7 +117,6 @@ type Item = {
 };
 
 interface PropsI extends FromPropsI {
-  sx?: SxProps;
   items: Item[];
   buttonLabel?: string;
 }

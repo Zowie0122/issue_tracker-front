@@ -10,9 +10,9 @@ export const groupUsersByDepartment = (
       const result = {
         label: department.name,
         options: users
-          .filter((user) => user.department_id === department.id)
+          .filter((user) => user.departmentId === department.id)
           .map((user) => ({
-            label: user.first_name + ' ' + user.last_name,
+            label: user.firstName + ' ' + user.lastName,
             value: user.id,
           })),
       };

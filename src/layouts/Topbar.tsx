@@ -85,7 +85,7 @@ const Topbar = () => {
         title="Settings"
         content={
           <UserSettingsForm
-            user={currentUser && { firstName: currentUser.first_name, lastName: currentUser.last_name }}
+            user={currentUser && { firstName: currentUser.firstName, lastName: currentUser.lastName }}
             onCancel={handleCloseSettings}
             onSubmit={handleUpdateSettings}
             submitting={updatingSettings}

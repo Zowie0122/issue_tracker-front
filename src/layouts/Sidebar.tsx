@@ -34,7 +34,7 @@ const Sidebar = ({ sx }: PropsI) => {
   const [items, setItems] = useState(defaultItems);
 
   useMemo(() => {
-    if (!loadingUser && user && user.role_id === PERMISSIONS.admin.value) {
+    if (!loadingUser && user && user.roleId === PERMISSIONS.admin.value) {
       setItems([...defaultItems, ...adminItems]);
     }
   }, [loadingUser]);
@@ -71,7 +71,7 @@ const Sidebar = ({ sx }: PropsI) => {
         <Avatar sx={{ width: 56, height: 56 }} src="../../public/avatar_default.png" />
         {user && (
           <Typography variant="body2" component="div" sx={{ marginTop: '1rem' }}>
-            {user.first_name + ' ' + user.last_name}
+            {user.firstName + ' ' + user.lastName}
           </Typography>
         )}
         <IconList items={items} sx={{ marginTop: '2rem' }} />

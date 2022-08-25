@@ -135,15 +135,14 @@ const List = () => {
         users
           .map((user: UserT) => ({
             id: user.id,
-            firstName: user.first_name,
-            lastName: user.last_name,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
-            role: user.role_id,
-            department: departments.find(
-              (department: DepartmentT) => department && department.id === user.department_id
-            ).name,
+            role: user.roleId,
+            department: departments.find((department: DepartmentT) => department && department.id === user.departmentId)
+              .name,
             status: user.status,
-            createdAt: user.created_at,
+            createdAt: user.createdAt,
             edit: {
               isAction: true,
               icon: 'edit',

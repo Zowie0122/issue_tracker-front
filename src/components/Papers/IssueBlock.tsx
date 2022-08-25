@@ -4,15 +4,15 @@ import IconText from '../IconText';
 import AvatarName from '../AvatarName';
 import { formatTimeSince, getLocalTimeString } from '../../utils/time';
 import { ISSUE_LABLE } from '../../utils/constants';
-import { IssueT } from '../../types';
+import { GenericPropI, IssueT } from '../../types';
 
-interface PropI {
+interface PropI extends GenericPropI {
   issue: IssueT;
 }
 
-const IssueBlock = ({ issue }: PropI) => {
+const IssueBlock = ({ sx, issue }: PropI) => {
   return (
-    <Paper sx={{ p: 3, my: 2 }}>
+    <Paper sx={{ p: 3, my: 2, ...sx }}>
       <Box sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
         <Stack direction="row" spacing={3} sx={{ color: 'secondary.dark' }}>
           {issue.status !== undefined && (

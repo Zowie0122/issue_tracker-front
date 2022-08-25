@@ -10,8 +10,8 @@ const AdminRoutes = () => {
   const [content, setContent] = useState(<Spinner />);
 
   useEffect(() => {
-    if (isSuccess && user.role_id === PERMISSIONS.admin.value) setContent(<Outlet />);
-    if (isSuccess && user.role_id !== PERMISSIONS.admin.value) setContent(<Navigate to="/issues/received" />);
+    if (isSuccess && user.roleId === PERMISSIONS.admin.value) setContent(<Outlet />);
+    if (isSuccess && user.roleId !== PERMISSIONS.admin.value) setContent(<Navigate to="/issues/received" />);
     if (isError) setContent(<Navigate to="/login" />);
   }, [isSuccess, isError]);
 

@@ -1,10 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import { CalendarMonth, DirectionsRun, CheckCircle, Face } from '@mui/icons-material';
+import { GenericPropI } from '../types';
 
-import { SxProps } from '@mui/system';
-
-interface PropsI {
-  sx?: SxProps;
+interface PropsI extends GenericPropI {
   label?: string;
   text: string | undefined | null;
   icon: keyof typeof ICONS;
@@ -19,7 +17,7 @@ const ICONS: {
   user: <Face />,
 };
 
-const IconText = ({ label, text = '', icon, sx }: PropsI) => {
+const IconText = ({ sx, label, text = '', icon }: PropsI) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-even', alignItems: 'center', ...sx }}>
       {ICONS[icon]}

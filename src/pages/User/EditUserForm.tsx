@@ -5,8 +5,8 @@ import { FromPropsI, FormOptionsT } from '../../types';
 interface PropsI extends FromPropsI {
   user: {
     email: string;
-    role_id: number;
-    department_id: number;
+    roleId: number;
+    departmentId: number;
     status: 0 | 1;
   };
   statusList: FormOptionsT;
@@ -36,14 +36,14 @@ const EditUserByAdmin = ({ user, rolesList, departmentsList, statusList, onCance
           label: 'Role',
           name: 'roleId',
           options: rolesList,
-          defaultValue: user.role_id,
+          defaultValue: user.roleId,
         },
         {
           type: 'selection',
           label: 'Department',
           name: 'departmentId',
           options: departmentsList,
-          defaultValue: user.department_id,
+          defaultValue: user.departmentId,
         },
         {
           type: 'selection',

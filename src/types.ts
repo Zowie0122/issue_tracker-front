@@ -4,19 +4,19 @@ import { SubmitHandler } from 'react-hook-form';
 
 export type UserT = {
   id?: string; // uuid
-  first_name?: string;
-  last_name?: string;
+  firstName?: string;
+  lastName?: string;
   email?: string;
-  company_id?: number;
-  role_id?: number;
-  department_id?: number;
-  created_at?: Date;
+  companyId?: number;
+  roleId?: number;
+  departmentId?: number;
+  createdAt?: Date;
   status?: 0 | 1;
 };
 
 export type DepartmentT = {
   id: number;
-  company_id?: number;
+  companyId?: number;
   name: string;
 };
 
@@ -63,6 +63,10 @@ export type IssueListRowT =
     }
   | undefined;
 
+export interface GenericPropI {
+  sx?: SxProps;
+}
+
 export type KeyValuePairObj = Record<string, any>;
 
 export const isKeyValuePairObj = (arg: any): arg is KeyValuePairObj => {
@@ -88,13 +92,12 @@ export type OnSubmitHandlerT = SubmitHandler<{ [key: string]: any }>;
 
 export type OnCancelHandlerT = (data: any) => void;
 
-export type FromPropsI = {
-  sx?: SxProps;
+export interface FromPropsI extends GenericPropI {
   onCancel?: OnCancelHandlerT;
   onSubmit: SubmitHandler<any>;
   submitting: boolean;
   disabled?: boolean;
-};
+}
 
 // errors
 export interface IssueTrackerErr {

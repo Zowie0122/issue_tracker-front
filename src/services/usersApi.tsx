@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { deepSnakeToCamel } from '../utils/format';
+import { KeyValuePairObj } from '../types';
 
 export const usersApi = createApi({
   reducerPath: 'users',
@@ -18,18 +20,29 @@ export const usersApi = createApi({
     getUsers: builder.query({
       query: () => '/users',
       providesTags: ['Users'],
+      transformResponse: (responseData: any) => {
+        return responseData.map((issueObj: KeyValuePairObj) => deepSnakeToCamel(issueObj));
+      },
     }),
 
     // get a single user by ID
     getUser: builder.query({
       query: (id) => `/users?id=${id}`,
       providesTags: ['User'],
+      transformResponse: (responseData: any) => {
+        console.log(responseData);
+        return deepSnakeToCamel(responseData);
+      },
     }),
 
     // get current logged in user
     getSelf: builder.query({
       query: () => `/users?self=1`,
       providesTags: ['User'],
+      transformResponse: (responseData: any) => {
+        console.log(responseData);
+        return deepSnakeToCamel(responseData);
+      },
     }),
 
     // current user update him/her self

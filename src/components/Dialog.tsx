@@ -3,7 +3,9 @@ import { Dialog as MuiDialog, DialogContent, DialogTitle } from '@mui/material';
 import ErrorAlert from './ErrorAlert';
 import Spinner from './Spinner';
 
-interface PropI {
+import { GenericPropI } from '../types';
+
+interface PropI extends GenericPropI {
   open: boolean;
   onClose: () => void;
   loading?: boolean;
@@ -12,9 +14,9 @@ interface PropI {
   content: JSX.Element | JSX.Element[];
 }
 
-const Dialog = ({ open, onClose, loading, title, content, errors }: PropI) => {
+const Dialog = ({ sx, open, onClose, loading, title, content, errors }: PropI) => {
   return (
-    <MuiDialog open={open} onClose={onClose} scroll="paper" fullWidth>
+    <MuiDialog open={open} onClose={onClose} scroll="paper" fullWidth sx={{ ...sx }}>
       <DialogTitle>{title}</DialogTitle>
       {loading ? (
         <Spinner />

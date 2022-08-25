@@ -159,8 +159,6 @@ const List = () => {
     }
   }, [loadingUsers, loadingDepartments, fetchingUsers]);
 
-  console.log(rows);
-
   if (loadingUsers || loadingDepartments) return <Spinner />;
   else if (errorUsers || errorDepartments) return <ErrorAlert errors={[errorUsers, errorDepartments]} />;
 

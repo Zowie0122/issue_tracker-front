@@ -6,7 +6,7 @@ import { Alert, Avatar, Paper, Box, Grid, Typography } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 
 import IssueTrackerForm from '../components/Forms/Base';
-import Footer from '../components/Layout/Footer';
+import Footer from '../layouts/Footer';
 
 import { getValidations } from '../utils/validation';
 import { CredentialsT } from '../services/authApi';

@@ -41,7 +41,6 @@ export const getTimeSince = (date: any) => {
     if (seconds === 0) return '0 second';
     if (interval) {
       const count = Math.floor(seconds / interval.seconds);
-      console.log(count, interval.label);
       return `${count} ${interval.label}${count !== 1 ? 's' : ''}`;
     }
   }

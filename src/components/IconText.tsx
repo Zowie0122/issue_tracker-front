@@ -4,10 +4,10 @@ import { CalendarMonth, DirectionsRun, CheckCircle, Face } from '@mui/icons-mate
 import { SxProps } from '@mui/system';
 
 interface PropsI {
+  sx?: SxProps;
   label?: string;
   text: string | undefined | null;
   icon: keyof typeof ICONS;
-  sx?: SxProps;
 }
 
 const ICONS: {
@@ -20,7 +20,6 @@ const ICONS: {
 };
 
 const IconText = ({ label, text = '', icon, sx }: PropsI) => {
-  console.log(icon);
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-even', alignItems: 'center', ...sx }}>
       {ICONS[icon]}

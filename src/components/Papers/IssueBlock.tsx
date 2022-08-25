@@ -14,7 +14,7 @@ const IssueBlock = ({ issue }: PropI) => {
   return (
     <Paper sx={{ p: 3, my: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={3} sx={{ color: 'secondary.dark' }}>
           {issue.status !== undefined && (
             <IconText
               text={ISSUE_LABLE[issue.status]}
@@ -34,7 +34,7 @@ const IssueBlock = ({ issue }: PropI) => {
           caption={issue.updatedAt && formatTimeSince('last updated ', issue.updatedAt)}
         />
       )}
-      <Typography variant="body1" sx={{ my: 2 }}>
+      <Typography variant="body1" sx={{ my: 2, color: 'secondary.dark' }}>
         {issue.description}
       </Typography>
     </Paper>

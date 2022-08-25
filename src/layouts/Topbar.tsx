@@ -3,13 +3,13 @@ import { useState, useMemo } from 'react';
 import { Toolbar, AppBar, IconButton } from '@mui/material';
 import { AccountCircle, Logout } from '@mui/icons-material';
 
-import { useGetSelfQuery, useUpdateSelfMutation } from '../../services/usersApi';
-import { useRemoveAuthMutation } from '../../services/authApi';
+import { useGetSelfQuery, useUpdateSelfMutation } from '../services/usersApi';
+import { useRemoveAuthMutation } from '../services/authApi';
 
-import Dialog from '../Dialog';
-import UserSettingsForm from '../../pages/User/UserSettingsForm';
+import Dialog from '../components/Dialog';
+import UserSettingsForm from '../pages/User/UserSettingsForm';
 
-import { KeyValuePairObj } from '../../types';
+import { KeyValuePairObj } from '../types';
 
 const Topbar = () => {
   const { data: currentUser } = useGetSelfQuery({});
@@ -47,16 +47,22 @@ const Topbar = () => {
 
   return (
     <>
-      <AppBar position="sticky" color="primary" sx={{ height: '80px' }}>
-        <Toolbar
-          sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
-        >
+      <AppBar
+        position="sticky"
+        sx={{
+          backgroundColor: 'white',
+          color: 'primary.main',
+          padding: '1rem',
+          boxShadow: 'none',
+        }}
+      >
+        <Toolbar sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
           <IconButton
             edge="end"
             aria-label="user settings"
             aria-controls="settings"
             color="inherit"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, '&:hover': { scale: '1.1' } }}
             onClick={() => setShowUserSettings(true)}
           >
             <AccountCircle sx={{ fontSize: '40px' }} />
@@ -66,6 +72,7 @@ const Topbar = () => {
             aria-label="logout"
             aria-controls="logout"
             color="inherit"
+            sx={{ mr: 2, '&:hover': { scale: '1.1' } }}
             onClick={() => removeAuth({})}
           >
             <Logout sx={{ fontSize: '40px' }} />

@@ -34,7 +34,6 @@ const List = () => {
 
   useMemo(() => {
     if (!savingNewDepartment && successNewDepartment) setShowNewDepartment(false);
-    console.log('Now refreshig');
   }, [savingNewDepartment]);
 
   // since redux toolkit RTK doesn't support reset cache yet, use local state to track and reset the error

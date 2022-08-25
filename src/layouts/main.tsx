@@ -1,8 +1,9 @@
 import { Box, Paper } from '@mui/material';
 
-import Topbar from '../components/Layout/Topbar';
-import Sidebar from '../components/Layout/Sidebar';
-import Footer from '../components/Layout/Footer';
+import Topbar from './Topbar';
+import Sidebar from './Sidebar';
+import Footer from './Footer';
+import { Container } from '@mui/system';
 
 const SIDEBAR_WIDTH = 240;
 
@@ -12,8 +13,8 @@ interface Props {
 
 export default function Main({ children }: Props) {
   return (
-    <Box sx={{ display: 'flex', height: '100%' }}>
-      <Sidebar isMobile={false} />
+    <Box sx={{ display: 'flex', height: '100%', minWidth: '1000px', overflowX: 'auto' }}>
+      <Sidebar />
       <Box
         component="main"
         sx={{
@@ -22,10 +23,12 @@ export default function Main({ children }: Props) {
         }}
       >
         <Topbar />
-        <Paper elevation={3} sx={{ m: 3, p: 3 }}>
-          {children}
-        </Paper>
-        <Footer />
+        <Container>
+          <Paper elevation={3} sx={{ m: 3, p: 3, backgroundColor: 'secondary.main' }}>
+            {children}
+          </Paper>
+          <Footer />
+        </Container>
       </Box>
     </Box>
   );

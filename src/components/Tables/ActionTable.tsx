@@ -106,7 +106,12 @@ const ActionTable = ({ sx, columns = [{ id: '', label: '' }], rows = [], loading
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell key={column.id} align={column.align ?? 'center'} style={{ minWidth: column.minWidth }}>
+                <TableCell
+                  key={column.id}
+                  align={column.align ?? 'center'}
+                  style={{ minWidth: column.minWidth }}
+                  sx={{ backgroundColor: 'primary.light', color: 'white' }}
+                >
                   {column.label}
                 </TableCell>
               ))}

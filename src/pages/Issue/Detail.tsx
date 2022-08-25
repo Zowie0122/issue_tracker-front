@@ -96,7 +96,9 @@ function Detail() {
         </Button>
       )}
       <IssueBlock issue={issue ? issue : {}} />
-      <Button onClick={() => setShowNewComment(true)}>Add Comment</Button>
+      <Button sx={{ m: 2 }} variant="contained" onClick={() => setShowNewComment(true)}>
+        Add Comment
+      </Button>
       {issue && issue.comments.map((comment: CommentT, i: number) => <CommentBlock key={i} comment={comment} />)}
 
       <Dialog

@@ -77,7 +77,7 @@ const List = ({ tag = 'all' }: PropsI) => {
 
   // table columns and rows
   const columns: Column[] = [
-    { id: 'id', label: 'Id' },
+    { id: 'id', label: 'ID' },
     { id: 'title', label: 'Title', format: (value: string) => toShortStr(value, 120) },
     {
       id: 'issued',
@@ -105,7 +105,6 @@ const List = ({ tag = 'all' }: PropsI) => {
 
   useMemo(() => {
     if (!loadingIssues && !fetchingIssues && issues && issues.length > 0) {
-      console.log(issues);
       const _rows = issues
         .map((issue: IssueT) => ({
           id: issue.id,

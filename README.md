@@ -34,37 +34,35 @@ This repo is paired with [Issue Tracker API](https://github.com/Zowie0122/issue_
 
 2. Copy the environment variable to `.env` from `.env.example` by
 
-```
-cat .env.example >> .env
-```
+   ```
+   cat .env.example >> .env
+   ```
 
 3. Please install [Docker](https://www.docker.com/products/docker-desktop/) if you hasn't, don't worry, it is still free 😆 !
 
 4. Make sure your Docker is up and running and host machine and docker environment are all available for port: `3000`. Then run
 
-```
-make restart
-```
+   ```
+   make restart
+   ```
 
 5. Go to `http://localhost:3000/login`, log in as user
 
-```
-email: tom@tomandjerry.com
-password: pAssword1@
-```
-
-Or as admin
-
-```
-email: admin@tomandjerry.com
-password: pAssword1@
-```
+   ```
+   email: tom@tomandjerry.com
+   password: pAssword1@
+   ```
+   Or as admin
+   ```
+   email: admin@tomandjerry.com
+   password: pAssword1@
+   ```
 
 6. To stop the container, run
-
-```
-make down
-```
+   
+   ```
+   make down
+   ```
 
 For more come in handy commands, please refer to [Makefile](./Makefile)
 
